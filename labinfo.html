@@ -7,41 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL VARIABLES (EXACT MATCH TO HOME) --- */
+        /* --- GLOBAL VARIABLES --- */
         :root {
             --bg-dark: #080812;
             --text-white: #ffffff;
             --text-gray: #a0a0b0;
             --primary-blue: #3c91c9;
             --primary-green: #76c043;
-            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
             --cyan-text: #00F0FF;
-            --green-accent: #00FF85;
-            --blue-accent: #3c91c9;
             --card-bg: #11111a;
-            --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
             --font-main: 'Outfit', sans-serif;
+            
+            /* Diagram Colors */
+            --dia-orange: #F4B084;
+            --dia-grey: #D9D9D9;
+            --dia-light-blue: #DEEBF7; /* Matched to image */
+            --dia-text-blue: #4472C4;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-white);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
+        body { background-color: var(--bg-dark); color: var(--text-white); overflow-x: hidden; line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
 
-        /* --- NAVIGATION BAR (EXACT MATCH TO HOME) --- */
+        /* --- NAV BAR --- */
         .glass-nav {
             position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
             display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg-dark); /* Solid dark background */
-            border-bottom: var(--glass-border); z-index: 1000;
+            background: var(--bg-dark); border-bottom: var(--glass-border); z-index: 1000;
         }
         .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
         .gradient-text {
@@ -49,57 +42,243 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links li {
-            cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; position: relative;
-        }
+        .nav-links li { cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; }
         .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
-        
         .btn-glow {
             padding: 10px 25px; border-radius: 50px;
             background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
-            border: none; color: white; font-weight: 600; cursor: pointer;
-            box-shadow: var(--glow-shadow); transition: 0.3s;
+            border: none; color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
+        .btn-glow:hover { transform: scale(1.05); }
 
-        /* --- LAB INFO CONTENT STYLES --- */
-        /* Padding matches the home page hero section padding */
-        .content-wrapper { padding: 140px 10% 60px; max-width: 1200px; margin: 0 auto; }
+        /* --- CONTENT WRAPPER --- */
+        .content-wrapper { padding: 140px 5% 60px; max-width: 1300px; margin: 0 auto; }
         
-        h1 { font-size: 3rem; margin-bottom: 40px; }
-        h2 { 
-            border-left: 4px solid var(--primary-blue); 
-            padding-left: 15px; 
-            margin-top: 50px; 
-            color: var(--cyan-text); 
-            margin-bottom: 20px; 
+        h1 { font-size: 2.5rem; text-align: center; margin-bottom: 10px; animation: fadeInDown 1s ease-out; }
+        .subtitle { text-align: center; color: var(--text-gray); margin-bottom: 60px; font-size: 1.1rem; animation: fadeInDown 1s ease-out 0.2s backwards; }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        p { color: var(--text-gray); line-height: 1.8; margin-bottom: 20px; }
-        ul { margin-bottom: 20px; padding-left: 20px; color: var(--text-gray); }
-        li { margin-bottom: 10px; }
 
-        /* Table Styling */
-        .impact-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
-        .impact-table th, .impact-table td { padding: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: left; vertical-align: top; font-size: 0.9rem; color: var(--text-gray); }
-        .impact-table th { background: rgba(60, 145, 201, 0.15); color: var(--cyan-text); font-weight: 700; }
-        
-        /* Image Styling */
-        .img-responsive { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
-        
-        /* Footer (Exact Match to Home) */
-        footer {
-            background: #000; padding: 60px 10%; border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 60px;
+        /* --- SECTIONS --- */
+        .info-section { 
+            margin-bottom: 80px; opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; 
         }
-        .footer-wrapper { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
-        .brand-col h3 { font-size: 1.5rem; margin-bottom: 10px; color: white; }
-        .brand-col p { color: var(--text-gray); font-size: 0.9rem; }
-        .contact-col h4 { color: white; margin-bottom: 15px; }
-        .contact-col p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .info-section.visible { opacity: 1; transform: translateY(0); }
 
-        /* Responsive */
+        .section-title { 
+            font-size: 1.8rem; color: white; margin-bottom: 25px; 
+            border-left: 5px solid var(--primary-blue); padding-left: 15px; 
+        }
+
+        p { color: var(--text-gray); margin-bottom: 15px; font-size: 1rem; text-align: justify; }
+        
+        ul { margin-left: 20px; margin-bottom: 20px; color: var(--text-gray); }
+        ul li { margin-bottom: 10px; }
+
+        .highlight-box {
+            background: rgba(60, 145, 201, 0.05); border: 1px solid rgba(60, 145, 201, 0.2);
+            padding: 25px; border-radius: 10px; margin: 20px 0;
+        }
+
+        .figure-caption { display: block; text-align: center; margin-top: 20px; color: var(--primary-green); font-size: 0.9rem; font-style: italic; }
+
+        /* ========================================= */
+        /* FIGURE 1: CSS VENN DIAGRAM                */
+        /* ========================================= */
+        .venn-wrapper {
+            display: flex; justify-content: center; align-items: center;
+            height: 300px; margin: 40px 0; position: relative;
+        }
+        .venn-circle {
+            width: 250px; height: 250px; border-radius: 50%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: absolute; text-align: center; padding: 20px;
+            transition: 0.5s ease;
+            mix-blend-mode: screen; 
+        }
+        .venn-circle h3 { font-size: 1.2rem; margin-bottom: 5px; color: #000; font-weight: 800; }
+        .venn-circle.orange { background-color: rgba(244, 176, 132, 0.9); left: 50%; transform: translateX(-85%); z-index: 1; }
+        .venn-circle.grey { background-color: rgba(217, 217, 217, 0.9); right: 50%; transform: translateX(85%); z-index: 2; }
+        
+        .venn-wrapper:hover .venn-circle.orange { transform: translateX(-95%); }
+        .venn-wrapper:hover .venn-circle.grey { transform: translateX(95%); }
+
+        /* ========================================= */
+        /* FIGURE 2: SCOPE BOXES (CSS)               */
+        /* ========================================= */
+        .scope-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+        .scope-card { border-radius: 5px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.3s; }
+        .scope-card:hover { transform: translateY(-5px); }
+        .scope-header { padding: 15px; text-align: center; font-weight: 700; font-size: 1.2rem; color: white; border-bottom: 2px solid rgba(0,0,0,0.1); }
+        .scope-body { padding: 20px; color: black; min-height: 180px; }
+        .scope-body ul { margin: 0; padding-left: 20px; color: black; }
+        .card-orange .scope-header { background: linear-gradient(to bottom, #F4B084, #ED7D31); }
+        .card-orange .scope-body { background: #FCE4D6; }
+        .card-grey .scope-header { background: linear-gradient(to bottom, #BFBFBF, #A5A5A5); }
+        .card-grey .scope-body { background: #F2F2F2; }
+
+        /* ========================================= */
+        /* FIGURE 3: ORG CHART (EXACT REPLICA)       */
+        /* ========================================= */
+        .org-container {
+            display: flex; flex-direction: column; align-items: center; margin: 50px 0; width: 100%;
+            background: white; padding: 40px; border-radius: 10px; /* White bg for readability */
+            overflow-x: auto; /* Allow scrolling on small screens */
+        }
+        
+        .org-box {
+            background: var(--dia-light-blue); 
+            color: #000;
+            padding: 15px 25px; text-align: center; 
+            font-weight: 500; font-family: serif; 
+            min-width: 150px;
+            position: relative; z-index: 2;
+            border: 1px solid transparent;
+            opacity: 0; animation: fadeInBox 0.8s ease forwards;
+        }
+        
+        .org-box span.blue-text { color: var(--dia-text-blue); display: block; margin-bottom: 5px; font-weight: 600; }
+
+        /* Level 1: Dean */
+        .level-1 { margin-bottom: 0; animation-delay: 0.2s; }
+
+        /* Connecting Lines (Solid Black) */
+        .line-vertical {
+            width: 2px; background: #000; height: 30px; margin: 0 auto;
+            opacity: 0; animation: growDown 0.5s ease forwards 0.8s;
+        }
+        
+        .line-arrow-down {
+            width: 0; height: 0; 
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-top: 8px solid #000; margin: 0 auto;
+            opacity: 0; animation: fadeIn 0.2s forwards 1.3s;
+        }
+
+        /* Level 2: Lab Leader & Experts */
+        .level-2 { 
+            display: flex; align-items: center; justify-content: center; 
+            position: relative; margin-top: 5px; 
+        }
+        
+        .experts-wrapper {
+            position: absolute; left: 100%; top: 50%; transform: translateY(-50%);
+            display: flex; align-items: center; margin-left: 20px; white-space: nowrap;
+        }
+
+        .dashed-arrow-container {
+            width: 60px; height: 2px; border-top: 2px dashed #000; 
+            position: relative; margin-right: 10px;
+            opacity: 0; animation: fadeIn 0.5s forwards 1.6s;
+        }
+        .arrow-head-left {
+            width: 0; height: 0; 
+            border-top: 5px solid transparent; border-bottom: 5px solid transparent; 
+            border-right: 8px solid #000; 
+            position: absolute; left: -5px; top: -6px;
+        }
+
+        /* Branching Structure */
+        .branch-structure {
+            display: flex; flex-direction: column; align-items: center; width: 100%;
+        }
+        .branch-stem {
+            width: 2px; background: #000; height: 30px; margin: 0 auto;
+            opacity: 0; animation: growDown 0.4s ease forwards 2s;
+        }
+        /* Width matches gap(40px) + width of one box approx (200px) */
+        .branch-crossbar {
+            width: 240px; height: 2px; background: #000; position: relative;
+            opacity: 0; animation: expandWidth 0.6s ease forwards 2.4s;
+        }
+        .branch-line-left, .branch-line-right {
+            width: 2px; height: 20px; background: #000; position: absolute; top: 0;
+        }
+        .branch-line-left { left: 0; }
+        .branch-line-right { right: 0; }
+        
+        .arrow-tip {
+            width: 0; height: 0; 
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-top: 8px solid #000; position: absolute; top: 20px;
+            opacity: 0; animation: fadeIn 0.2s forwards 3s;
+        }
+        .tip-left { left: -4px; }
+        .tip-right { right: -4px; }
+
+        /* Level 3: Students & Staffs */
+        .level-3 {
+            display: flex; gap: 40px; justify-content: center; margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInBox { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes growDown { from { height: 0; } to { height: 30px; opacity: 1; } }
+        @keyframes expandWidth { from { width: 0; opacity: 1; } to { width: 240px; opacity: 1; } }
+        @keyframes fadeIn { to { opacity: 1; } }
+        
         @media (max-width: 900px) {
-            .nav-links { display: none; }
+            .experts-wrapper { position: static; transform: none; margin-top: 10px; flex-direction: column; }
+            .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+            .level-2 { flex-direction: column; }
+        }
+
+        /* ========================================= */
+        /* FIGURE 4: STAGES FLOW (CSS)               */
+        /* ========================================= */
+        .stage-flow-container {
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            margin-bottom: 40px; flex-wrap: wrap; 
+        }
+        .stage-box {
+            background: linear-gradient(135deg, rgba(60,145,201,0.15), rgba(118,192,67,0.15));
+            border: 1px solid var(--glass-border); padding: 10px 5px; border-radius: 6px;
+            text-align: center; min-width: 100px; flex: 1; 
+            transition: 0.3s; opacity: 0; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .stage-box:hover { transform: translateY(-5px); border-color: var(--primary-green); background: rgba(118, 192, 67, 0.1); }
+        .stage-box h4 { color: rgba(255,255,255,0.7); font-size: 0.65rem; text-transform: uppercase; margin: 0; }
+        .stage-box span { color: var(--text-white); font-weight: 700; font-size: 0.9rem; line-height: 1.2; }
+        .stage-box.last { background: rgba(60, 145, 201, 0.3); border-color: var(--primary-blue); }
+        .stage-arrow { color: var(--text-gray); font-size: 0.8rem; opacity: 0; animation: fadeIn 0.5s ease forwards; }
+        
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; } .delay-4 { animation-delay: 0.7s; }
+        .delay-5 { animation-delay: 0.9s; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- TABLES --- */
+        .custom-table-wrapper { overflow-x: auto; margin: 30px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px; }
+        .custom-table { width: 100%; border-collapse: collapse; min-width: 900px; background: var(--card-bg); }
+        .custom-table th, .custom-table td {
+            padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); border-right: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem; vertical-align: top;
+        }
+        .custom-table th { background: rgba(60, 145, 201, 0.15); color: var(--primary-blue); text-transform: uppercase; font-size: 0.8rem; font-weight: 700; }
+        .custom-table td { color: var(--text-gray); line-height: 1.4; }
+        .col-strategy { width: 120px; font-weight: bold; color: var(--primary-green) !important; background: rgba(118, 192, 67, 0.05); }
+
+        /* --- TAGS --- */
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .tag { background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; color: var(--cyan-text); font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .tag:hover { background: rgba(0, 240, 255, 0.15); transform: translateY(-3px); }
+
+        /* Footer */
+        footer { background: #000; padding: 60px 10%; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 80px; }
+        .footer-wrapper { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+        .contact-col p { color: var(--text-gray); margin-bottom: 10px; }
+
+        @media (max-width: 900px) { 
+            .nav-links { display: none; } 
+            .scope-container { grid-template-columns: 1fr; }
+            .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+            .venn-wrapper { flex-direction: column; height: auto; }
+            .stage-flow-container { flex-direction: column; width: 100%; }
+            .stage-box { width: 100%; margin-bottom: 5px; }
+            .stage-arrow { transform: rotate(90deg); margin: 5px 0; }
         }
     </style>
 </head>
@@ -123,59 +302,319 @@
     </nav>
 
     <div class="content-wrapper">
-        <h1>Lab Information</h1>
         
-        <h2>Background</h2>
-        <p>The Nepalese power grid is transitioning to a state of surplus generation, eliminating loadshedding and paving the way for the adoption of advanced technologies such as smart grids, digital substations, optical fiber communication for power systems, and phasor measurement units. These advancements aim to make the Integrated Nepal Power System (INPS) stronger, more reliable, and efficient.</p>
-        <p>The Grid Modernization Lab (GML) at Kathmandu University is dedicated to developing state-of-the-art tools and software to enhance the INPS. These tools are designed to be more accurate, computationally efficient, and robust compared to those currently used by the Nepal Electrical Authority (NEA) and Independent Power Producers (IPPs). Our research focuses on critical areas such as energy storage (pumped hydro and others), wide-area monitoring, and control systems, which are vital for the future of INPS. Additionally, GML collaborates with industry partners to develop technologies that reduce reliance on imported products.</p>
+        <h1>Lab Information</h1>
+        <p class="subtitle"> GMLab 2025</p>
 
-        <h2>Objectives</h2>
-        <ul>
-            <li>Develop tools using cutting-edge techniques to enhance the electric grid.</li>
-            <li>Demonstrate cutting edge technologies for grid enhancement through real world implementations.</li>
-            <li>Serve as a hub for academicians and industrialists in grid modernization.</li>
-        </ul>
-        <img src="images/objectives-diagram.png" alt="Objectives Diagram" class="img-responsive" onerror="this.style.display='none'">
+        <section class="info-section">
+            <h2 class="section-title">1. Background</h2>
+            <p>The Nepalese power grid is moving towards the scenario of having sufficient surplus generation compared to the electrical local load demand. This has removed loadshedding from the country and allowed the grid to look forward to new and exciting technologies adoption such as smart-grid, digital substation, optical fiber communication for power systems, phasor measurement units installations etc. All of these new technologies will help to make the Nepalese grid stronger, reliable and effective.</p>
+            <p>This lab proposes to develop tools and software using state of the art techniques to strengthen the Integrated Nepal Power System (INPS). The developed tools aim to be more accurate, computationally efficient and robust compared to the existing tools used by Nepal Electrical Authority (NEA) and Independent Power Producers (IPPs). Similarly, the lab will do highly relevant and important research such as application of storage (pumped hydro and others), wide area monitoring and control that could be highly beneficial for the future INPS scenario. Finally, the lab will develop technologies with collaboration with industries for enhancement of power system that will help to reduce import of similar products from abroad.</p>
+        </section>
 
-        <h2>Scope of the Lab</h2>
-        <p>This lab aims to conduct research and provide tools to analyze the power system. Furthermore, it also aim to develop technologies that can strengthen the power systems. Thus, the scope of this project are as follows:</p>
-        <ul>
-            <li>Application of cutting edge technologies such as artificial intelligence (AI), probability based methods etc for power systems.</li>
-            <li>Special focus on issues in Integrated Nepal Power Systems (INPS).</li>
-        </ul>
+        <section class="info-section">
+            <h2 class="section-title">2. Objectives</h2>
+            <p>GML lab aims to develop the tools for strengthening and modernize the power system and so the main objectives of it are as follows:</p>
+            <ul style="margin-bottom:0;">
+                <li>To develop tools using state of the art techniques for enhancement of the electric grid.</li>
+                <li>To demonstrate cutting edge technologies for grid enhancement through real world implementations.</li>
+                <li>To serve as a hub for academicians and industrialists in the field of grid modernization.</li>
+            </ul>
+            
+            <div class="venn-wrapper">
+                <div class="venn-circle orange">
+                    <h3>Tool<br>Development</h3>
+                </div>
+                <div class="venn-circle grey">
+                    <h3>Technology<br>Demonstration</h3>
+                </div>
+            </div>
+            <span class="figure-caption">Figure 1: Objectives of GML lab</span>
+        </section>
 
-        <h2>Impacts of GML Lab</h2>
-        <table class="impact-table">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Community</th>
-                    <th>University</th>
-                    <th>Industry</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Research</strong></td>
-                    <td>Develop power system solutions for a better, smart and reliable power grid.</td>
-                    <td>More hands on training for subjects: EPEG 317, EPEG 315, EPEG 413, MEPE 503, MEPE 510.</td>
-                    <td>Technology transfer.<br>Better cooperation and trust.</td>
-                </tr>
-                <tr>
-                    <td><strong>Socio-economic</strong></td>
-                    <td>Increased reliability of electricity.</td>
-                    <td>Sustainable income due to overhead cost and patent.</td>
-                    <td>Possible increase in revenue due to locally manufactured product.</td>
-                </tr>
-            </tbody>
-        </table>
+        <section class="info-section">
+            <h2 class="section-title">3. Scope of the Lab</h2>
+            <p>This lab aims to conduct research and provide tools to analyze the power system. Furthermore, it also aim to develop technologies that can strengthen the power systems.</p>
 
-        <h2>Development and Sustainability Plan</h2>
-        <p>The GML lab will be developed in four stages: Stage I where the important research areas will be narrowed down, Stage II where the laboratory set-up will be done, Stage III will demonstrate the research and technologies capabilities of the lab followed by Stage IV where the lab will be advertised in various communication mediums to make it more visible in the power system field.</p>
-        <img src="images/timeline-diagram.png" alt="Sustainability Plan Timeline" class="img-responsive" onerror="this.style.display='none'">
+            <div class="scope-container">
+                <div class="scope-card card-orange">
+                    <div class="scope-header">Tool Development</div>
+                    <div class="scope-body">
+                        <ul>
+                            <li>Data driven methods</li>
+                            <li>Probabilistic and stochastic methods</li>
+                            <li>Optimization</li>
+                            <li>Efficient power flow algorithms...</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="scope-card card-grey">
+                    <div class="scope-header">Technology Demonstration</div>
+                    <div class="scope-body">
+                        <ul>
+                            <li>Wide area monitoring, protection and control</li>
+                            <li>Digital twins</li>
+                            <li>Grid visualization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <span class="figure-caption">Figure 2: Scope of the lab</span>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">4. Lab Team Organization</h2>
+            <p>GML Lab aims to be a pioneer in smart-power system and have a strong team. It will be headed by the lab leader who will be guided by the Head of Department of Electrical and Electronics Engineering and Dean of School of Engineering, Kathmandu University. The lab will be supported by both the internal faculties of the concerned department as well as by different industrial partners. Furthermore, it will also guided by foreign experts.</p>
+
+            <div class="org-container">
+                
+                <div class="org-box level-1">
+                    Dean of Engineering &<br>Head of Department of Electrical and Electronics Engineering
+                </div>
+                <div class="line-vertical"></div>
+                <div class="line-arrow-down"></div>
+
+                <div class="level-2">
+                    <div class="org-box" style="animation-delay: 1.4s;">Lab Leader</div>
+                    
+                    <div class="experts-wrapper">
+                        <div class="dashed-arrow-container">
+                            <div class="arrow-head-left"></div>
+                        </div>
+                        <div class="org-box" style="animation-delay: 1.6s;">
+                            <span class="blue-text">Experts</span>
+                            National/ International Universities<br>Industrial partners
+                        </div>
+                    </div>
+                </div>
+
+                <div class="branch-structure">
+                    <div class="branch-stem"></div> <div class="branch-crossbar">   <div class="branch-line-left"><div class="arrow-tip tip-left"></div></div>  <div class="branch-line-right"><div class="arrow-tip tip-right"></div></div> </div>
+                </div>
+
+                <div class="level-3">
+                    <div class="org-box" style="animation-delay: 2.6s; min-width: 200px;">
+                        <span class="blue-text">Student/Researchers</span>
+                        PhD<br>Master<br>Bachelors
+                    </div>
+                    <div class="org-box" style="animation-delay: 2.8s; min-width: 200px; display: flex; align-items: center; justify-content: center;">
+                        <span class="blue-text">Staffs</span>
+                    </div>
+                </div>
+
+            </div>
+            <span class="figure-caption" style="margin-bottom: 30px;">Figure 3: Structural Organization of the GML Lab</span>
+
+            <h3>Table 1: Details of the lab personnel</h3>
+            <div class="custom-table-wrapper">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th><th>Name</th><th>Role</th><th>Affiliation</th><th>Specialization</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Dr. Samundra Gurung</td><td>Lead</td><td>Asst. Professor, KU</td><td>Expert in power system analysis & stability</td></tr>
+                        <tr><td>2</td><td>Dr. Kamal Chapagain</td><td>Lab Advisor</td><td>Asst. Professor, KU</td><td>Expert in AI for energy</td></tr>
+                        <tr><td>3</td><td>Prof. Petr Korba</td><td>Lab Advisor</td><td>Zurich University</td><td>Expert in Power Systems</td></tr>
+                        <tr><td>4</td><td>Prof. Dr. Francisco Jurado</td><td>Lab Advisor</td><td>Univ. of Jaen, Spain</td><td>Expert in power system policy</td></tr>
+                        <tr><td>5</td><td>Er. Ashish Shrestha</td><td>Lab Advisor</td><td>Mailung Khola Hydro</td><td>12 years experience in hydropower</td></tr>
+                        <tr><td>6</td><td>Dr. Sushil Aryal</td><td>Lab Advisor</td><td>NEA</td><td>15+ years experience in power systems</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">5. Impacts of GML Lab</h2>
+            <div class="custom-table-wrapper">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th width="15%">Benefit Category</th>
+                            <th width="28%">Community</th>
+                            <th width="28%">University</th>
+                            <th width="29%">Industry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Research</strong></td>
+                            <td>
+                                <ul>
+                                    <li>Develop power system solutions for a better, smart and reliable power grid</li>
+                                    <li>Fabrication of technologies which can improve various rural off-grid</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>More hands on training for subjects: EPEG 317: Measurement & Instrumentation, EPEG 315: Power Systems-I, EPEG 318: Power Electronics, EPEG 413: Power Systems-II, MEPE 503: Power System Analysis, MEPE 510: Power System Dynamics and Control</li>
+                                    <li>Publication of papers in Internationally-reviewed journals and proceedings</li>
+                                    <li>Patent</li>
+                                    <li>Training of researchers in the field of power electronics, machine learning, and IOT</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Solve urgent and important existing problems in the field of power systems.</li>
+                                    <li>Develop prototype technologies which can benefit the Nepalese Power System</li>
+                                    <li>Technology transfer</li>
+                                    <li>Better cooperation and trust between Industry and University</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Socio-economic</strong></td>
+                            <td>
+                                <ul><li>Increased reliability of electricity</li></ul>
+                            </td>
+                            <td>
+                                <ul><li>Better cooperation and trust between Industry and University</li><li>Collaboration between different institutes and university with KU</li></ul>
+                            </td>
+                            <td>
+                                <ul><li>Sustainable income due to overhead cost and patent</li><li>Possible increase in revenue due to locally manufactured product</li></ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">6. Expected Outcomes</h2>
+            <div class="highlight-box">
+                <ul>
+                    <li>This lab will conduct high quality researches for Nepalese power systems which will help to strengthen our country power grid.</li>
+                    <li>This lab aims to develop tools for grid strengthening which can potentially bring revenue to the university.</li>
+                    <li>The lab will collaborate with various national and international research partners, industries and universities thus will help to improve the quality of teaching, upgrade the department and research environment.</li>
+                    <li>The lab will bring funds from internal and external sources providing employment opportunities and ultimately will help to enhance the reputation of the university.</li>
+                </ul>
+            </div>
+            
+            <h2 class="section-title">7. Projects</h2>
+            <ul>
+                <li><strong>D-VA Grid:</strong> Distribution Automation Tool for Visualization and Control of Automated Devices for a Reliable and Efficient Electric Distribution System. (Funded by Energize Nepal)</li>
+                <li><strong>REDS:</strong> Smart Urban Electric Distribution for a Reliable and Efficient Electric Power Supply to all Consumers. (Funded by NAST Nepal)</li>
+                <li><strong>Net Zero:</strong> Strategies for a Secure Operation of Net Zero Power Systems. (Funded by Leading House for Research Collaboration)</li>
+            </ul>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">8. Development and Sustainability Plan</h2>
+            
+            <div class="stage-flow-container">
+                <div class="stage-box delay-1"><h4>Stage I</h4><span>Lab Idea</span></div>
+                <div class="stage-arrow delay-1"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="stage-box delay-2"><h4>Stage II</h4><span>Incubation</span></div>
+                <div class="stage-arrow delay-2"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="stage-box delay-3"><h4>Stage III</h4><span>Demonstration</span></div>
+                <div class="stage-arrow delay-3"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="stage-box delay-4"><h4>Stage IV</h4><span>Promotion</span></div>
+                <div class="stage-arrow delay-4"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="stage-box last delay-5"><h4>Stage V</h4><span>Sustaining</span></div>
+            </div>
+
+            <div class="custom-table-wrapper">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="col-stage-header">Stage I<br><small>Lab Idea</small></th>
+                            <th class="col-stage-header">Stage II<br><small>Incubation</small></th>
+                            <th class="col-stage-header">Stage III<br><small>Demonstration</small></th>
+                            <th class="col-stage-header">Stage IV<br><small>Promotion</small></th>
+                            <th class="col-stage-header">Stage V<br><small>Sustaining</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-strategy">Strategies</td>
+                            <td>
+                                <ul>
+                                    <li>Identification of critical and key problems in Nepalese power systems</li>
+                                    <li>Consultation and collaboration with experts and industrial partners</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Laboratory setup</li>
+                                    <li>Hiring of researchers and office staff</li>
+                                    <li>Search and apply for different internal and external funding sources</li>
+                                    <li>Apply for internal and external funding resources</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Provide solutions to beneficiaries</li>
+                                    <li>Apply for patent</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Use sales, tools and promotional material such as brochure, website</li>
+                                    <li>Advertising and communication through exhibition, seminars etc</li>
+                                    <li>Provide training to students, researchers and collaborators</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Collaborate with other laboratories and research centers</li>
+                                    <li>Develop technologies according to the Nepalese power system demand</li>
+                                    <li>Incorporating new technologies according to advancement and market requirement to product</li>
+                                    <li>Extend the lab to a center</li>
+                                    <li>Provide training to stakeholders</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-strategy">Expected Outcome</td>
+                            <td>Cutting edge research applied to significant power system problems</td>
+                            <td>
+                                <ul>
+                                    <li>Laboratory setup</li>
+                                    <li>Funding</li>
+                                </ul>
+                            </td>
+                            <td>Research results and product development</td>
+                            <td>Lab will be well-known in the power system field</td>
+                            <td>A sustainable and leading lab in the field of power system</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 class="section-title">9. Beneficiaries</h2>
+            <div class="tag-cloud">
+                <span class="tag">Nepal Electrical Authority</span>
+                <span class="tag">Independent Power Producers</span>
+                <span class="tag">Energy Policy Makers</span>
+                <span class="tag">Power System Industries</span>
+                <span class="tag">Universities</span>
+                <span class="tag">Energy Consultants</span>
+                <span class="tag">Renewable Power Generations</span>
+                <span class="tag">Solar/Wind Mini/Micro Grid</span>
+                <span class="tag">Microhydro Systems</span>
+            </div>
+        </section>
+
     </div>
 
 
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.info-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 
 </body>
 </html>
