@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | GML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL VARIABLES --- */
+        :root {
+            --bg-dark: #080812;
+            --text-white: #ffffff;
+            --text-gray: #a0a0b0;
+            --primary-blue: #3c91c9;
+            --primary-green: #76c043;
+            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
+            --cyan-text: #00F0FF;
+            --card-bg: #11111a;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- NAV BAR --- */
+        .glass-nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-dark); 
+            border-bottom: var(--glass-border); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links li {
+            cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; position: relative;
+        }
+        .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
+        
+        .btn-glow {
+            padding: 10px 25px; border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+            border: none; color: white; font-weight: 600; cursor: pointer;
+            box-shadow: var(--glow-shadow); transition: 0.3s;
+        }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
+
+        /* --- GALLERY PAGE CONTENT --- */
+        .content-wrapper { padding: 140px 10% 60px; max-width: 1200px; margin: 0 auto; }
+        
+        h1 { font-size: 3rem; margin-bottom: 20px; text-align: center; }
+        .page-desc { text-align: center; color: var(--text-gray); margin-bottom: 60px; }
+
+        /* Year Headers */
+        .year-header {
+            display: flex; align-items: center; gap: 20px; margin: 60px 0 30px;
+        }
+        .year-title {
+            font-size: 2.5rem; font-weight: 800; color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            position: relative;
+        }
+        .year-line {
+            height: 1px; flex-grow: 1; background: linear-gradient(90deg, var(--primary-blue), transparent);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Gallery Card */
+        .gallery-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s ease;
+            position: relative;
+            group: hover;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .img-wrapper {
+            width: 100%; height: 220px; overflow: hidden; position: relative;
+        }
+
+        .gallery-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-card:hover .gallery-img { transform: scale(1.1); }
+
+        /* Card Content */
+        .card-content { padding: 20px; }
+
+        .tag {
+            font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+            text-transform: uppercase; padding: 5px 10px; border-radius: 4px;
+            display: inline-block; margin-bottom: 10px;
+        }
+
+        /* Tag Colors */
+        .tag-event { background: rgba(118, 192, 67, 0.15); color: var(--primary-green); }
+        .tag-collab { background: rgba(60, 145, 201, 0.15); color: var(--primary-blue); }
+        .tag-activity { background: rgba(0, 240, 255, 0.15); color: var(--cyan-text); }
+
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: #fff; }
+        .card-date { font-size: 0.85rem; color: var(--text-gray); display: block; margin-bottom: 0; }
+
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fa-solid fa-bolt gradient-text"></i>
+            <span>GMLab</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="labinfo.html">Lab Info</a></li>
+            <li><a href="people.html">People</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>Gallery</h1>
+        <p class="page-desc">A timeline of our research activities, collaborations, and events.</p>
+
+        <div class="year-header">
+            <span class="year-title">2025</span>
+            <div class="year-line"></div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery1.jpg" class="gallery-img" alt="NEA Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-collab">Collaboration</span>
+                    <h3 class="card-title">Joint Research with NEA</h3>
+                    <span class="card-date">January 15, 2025</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery2.jpg" class="gallery-img" alt="Lab Setup" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-activity">Activity</span>
+                    <h3 class="card-title">New Microgrid Simulation Setup</h3>
+                    <span class="card-date">February 2, 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-header">
+            <span class="year-title">2024</span>
+            <div class="year-line"></div>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery3.jpg" class="gallery-img" alt="Workshop" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-event">Event</span>
+                    <h3 class="card-title">Renewable Energy Workshop</h3>
+                    <span class="card-date">November 20, 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery4.jpg" class="gallery-img" alt="Guest Lecture" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-event">Event</span>
+                    <h3 class="card-title">Guest Lecture by Prof. Korba</h3>
+                    <span class="card-date">October 5, 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery5.jpg" class="gallery-img" alt="Field Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-activity">Activity</span>
+                    <h3 class="card-title">Field Visit to Mailung Khola</h3>
+                    <span class="card-date">August 12, 2024</span>
+                </div>
+            </div>
+             <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="images/gallery6.jpg" class="gallery-img" alt="Signing" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-collab">Collaboration</span>
+                    <h3 class="card-title">MOU Signing with Industry Partners</h3>
+                    <span class="card-date">May 10, 2024</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="contact" style="height: 1px;"></div> 
+</body>
+</html>

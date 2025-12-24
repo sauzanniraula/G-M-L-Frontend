@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | GML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- COPYING STYLES EXACTLY FROM LANDING PAGE --- */
+        :root {
+            --bg-dark: #080812;
+            --text-white: #ffffff;
+            --text-gray: #a0a0b0;
+            --primary-blue: #3c91c9;
+            --primary-green: #76c043;
+            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
+            --cyan-text: #00F0FF;
+            --green-accent: #00FF85;
+            --blue-accent: #3c91c9;
+            --card-bg: #11111a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- EXACT NAV BAR CSS --- */
+        .glass-nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-dark); 
+            border-bottom: var(--glass-border); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links li {
+            cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; position: relative;
+        }
+        .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
+        
+        .btn-glow {
+            padding: 10px 25px; border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+            border: none; color: white; font-weight: 600; cursor: pointer;
+            box-shadow: var(--glow-shadow); transition: 0.3s;
+        }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
+
+        /* --- PAGE SPECIFIC CONTENT STYLES --- */
+        .content-wrapper { padding: 150px 10% 60px; text-align: center; }
+        .placeholder-box { background: var(--card-bg); padding: 50px; border-radius: 15px; border: 1px dashed rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fa-solid fa-bolt gradient-text"></i>
+            <span>GMLab</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="labinfo.html">Lab Info</a></li>
+            <li><a href="people.html">People</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="events.html" class="active">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>Events</h1>
+        <div class="placeholder-box">
+            <p style="font-size: 1.2rem; color: var(--text-gray);">Stay tuned for upcoming workshops, conferences, and updates.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Info | GML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL VARIABLES (EXACT MATCH TO HOME) --- */
+        :root {
+            --bg-dark: #080812;
+            --text-white: #ffffff;
+            --text-gray: #a0a0b0;
+            --primary-blue: #3c91c9;
+            --primary-green: #76c043;
+            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
+            --cyan-text: #00F0FF;
+            --green-accent: #00FF85;
+            --blue-accent: #3c91c9;
+            --card-bg: #11111a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- NAVIGATION BAR (EXACT MATCH TO HOME) --- */
+        .glass-nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-dark); /* Solid dark background */
+            border-bottom: var(--glass-border); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links li {
+            cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; position: relative;
+        }
+        .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
+        
+        .btn-glow {
+            padding: 10px 25px; border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+            border: none; color: white; font-weight: 600; cursor: pointer;
+            box-shadow: var(--glow-shadow); transition: 0.3s;
+        }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
+
+        /* --- LAB INFO CONTENT STYLES --- */
+        /* Padding matches the home page hero section padding */
+        .content-wrapper { padding: 140px 10% 60px; max-width: 1200px; margin: 0 auto; }
+        
+        h1 { font-size: 3rem; margin-bottom: 40px; }
+        h2 { 
+            border-left: 4px solid var(--primary-blue); 
+            padding-left: 15px; 
+            margin-top: 50px; 
+            color: var(--cyan-text); 
+            margin-bottom: 20px; 
+        }
+        p { color: var(--text-gray); line-height: 1.8; margin-bottom: 20px; }
+        ul { margin-bottom: 20px; padding-left: 20px; color: var(--text-gray); }
+        li { margin-bottom: 10px; }
+
+        /* Table Styling */
+        .impact-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
+        .impact-table th, .impact-table td { padding: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: left; vertical-align: top; font-size: 0.9rem; color: var(--text-gray); }
+        .impact-table th { background: rgba(60, 145, 201, 0.15); color: var(--cyan-text); font-weight: 700; }
+        
+        /* Image Styling */
+        .img-responsive { max-width: 100%; height: auto; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin: 20px 0; }
+        
+        /* Footer (Exact Match to Home) */
+        footer {
+            background: #000; padding: 60px 10%; border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 60px;
+        }
+        .footer-wrapper { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+        .brand-col h3 { font-size: 1.5rem; margin-bottom: 10px; color: white; }
+        .brand-col p { color: var(--text-gray); font-size: 0.9rem; }
+        .contact-col h4 { color: white; margin-bottom: 15px; }
+        .contact-col p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fa-solid fa-bolt gradient-text"></i>
+            <span>GMLab</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="labinfo.html" class="active">Lab Info</a></li>
+            <li><a href="people.html">People</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1>Lab Information</h1>
+        
+        <h2>Background</h2>
+        <p>The Nepalese power grid is transitioning to a state of surplus generation, eliminating loadshedding and paving the way for the adoption of advanced technologies such as smart grids, digital substations, optical fiber communication for power systems, and phasor measurement units. These advancements aim to make the Integrated Nepal Power System (INPS) stronger, more reliable, and efficient.</p>
+        <p>The Grid Modernization Lab (GML) at Kathmandu University is dedicated to developing state-of-the-art tools and software to enhance the INPS. These tools are designed to be more accurate, computationally efficient, and robust compared to those currently used by the Nepal Electrical Authority (NEA) and Independent Power Producers (IPPs). Our research focuses on critical areas such as energy storage (pumped hydro and others), wide-area monitoring, and control systems, which are vital for the future of INPS. Additionally, GML collaborates with industry partners to develop technologies that reduce reliance on imported products.</p>
+
+        <h2>Objectives</h2>
+        <ul>
+            <li>Develop tools using cutting-edge techniques to enhance the electric grid.</li>
+            <li>Demonstrate cutting edge technologies for grid enhancement through real world implementations.</li>
+            <li>Serve as a hub for academicians and industrialists in grid modernization.</li>
+        </ul>
+        <img src="images/objectives-diagram.png" alt="Objectives Diagram" class="img-responsive" onerror="this.style.display='none'">
+
+        <h2>Scope of the Lab</h2>
+        <p>This lab aims to conduct research and provide tools to analyze the power system. Furthermore, it also aim to develop technologies that can strengthen the power systems. Thus, the scope of this project are as follows:</p>
+        <ul>
+            <li>Application of cutting edge technologies such as artificial intelligence (AI), probability based methods etc for power systems.</li>
+            <li>Special focus on issues in Integrated Nepal Power Systems (INPS).</li>
+        </ul>
+
+        <h2>Impacts of GML Lab</h2>
+        <table class="impact-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Community</th>
+                    <th>University</th>
+                    <th>Industry</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Research</strong></td>
+                    <td>Develop power system solutions for a better, smart and reliable power grid.</td>
+                    <td>More hands on training for subjects: EPEG 317, EPEG 315, EPEG 413, MEPE 503, MEPE 510.</td>
+                    <td>Technology transfer.<br>Better cooperation and trust.</td>
+                </tr>
+                <tr>
+                    <td><strong>Socio-economic</strong></td>
+                    <td>Increased reliability of electricity.</td>
+                    <td>Sustainable income due to overhead cost and patent.</td>
+                    <td>Possible increase in revenue due to locally manufactured product.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Development and Sustainability Plan</h2>
+        <p>The GML lab will be developed in four stages: Stage I where the important research areas will be narrowed down, Stage II where the laboratory set-up will be done, Stage III will demonstrate the research and technologies capabilities of the lab followed by Stage IV where the lab will be advertised in various communication mediums to make it more visible in the power system field.</p>
+        <img src="images/timeline-diagram.png" alt="Sustainability Plan Timeline" class="img-responsive" onerror="this.style.display='none'">
+    </div>
+
+
+
+</body>
+</html>

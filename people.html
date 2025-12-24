@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People | GML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark:#080812;
+            --text-white:#fff;
+            --text-gray:#a0a0b0;
+            --primary-blue:#3c91c9;
+            --primary-green:#76c043;
+            --card-bg:#11111a;
+            --glass-border:1px solid rgba(255,255,255,0.08);
+            --font-main:'Outfit',sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-main);}
+        body{background:var(--bg-dark);color:var(--text-white);line-height:1.6;}
+        a{text-decoration:none;color:inherit;}
+
+        .glass-nav{
+            position:fixed;top:0;width:100%;padding:1.2rem 5%;
+            display:flex;justify-content:space-between;align-items:center;
+            background:var(--bg-dark);border-bottom:var(--glass-border);z-index:1000;
+        }
+        .logo{font-size:1.5rem;font-weight:800;display:flex;gap:10px;align-items:center;}
+        .gradient-text{
+            background:linear-gradient(135deg,var(--primary-blue),var(--primary-green));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        .nav-links{display:flex;list-style:none;gap:30px;}
+        .nav-links li{color:var(--text-gray);}
+        .nav-links li:hover,.nav-links a.active{color:#fff;}
+        .btn-glow{
+            padding:10px 25px;border-radius:50px;
+            background:linear-gradient(90deg,var(--primary-blue),var(--primary-green));
+            border:none;color:#fff;font-weight:600;cursor:pointer;
+        }
+
+        .content-wrapper{padding:140px 10% 60px;max-width:1200px;margin:auto;}
+        h1{text-align:center;font-size:3rem;margin-bottom:50px;}
+        h2{
+            border-left:4px solid var(--primary-blue);
+            padding-left:15px;margin:60px 0 30px;font-size:1.8rem;
+        }
+        .year-label{
+            display:block;color:var(--primary-green);
+            font-weight:700;margin-bottom:20px;
+        }
+
+        .team-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+            gap:30px;margin-bottom:40px;
+        }
+        .team-card{
+            background:var(--card-bg);
+            border:1px solid rgba(255,255,255,0.05);
+            border-radius:15px;
+            padding:30px 20px;
+            text-align:center;
+            transition:0.3s;
+        }
+        .team-card:hover{transform:translateY(-8px);border-color:var(--primary-blue);}
+        .team-img{
+            width:120px;height:120px;border-radius:50%;
+            object-fit:cover;margin-bottom:15px;
+            border:3px solid rgba(60,145,201,0.3);
+        }
+        .team-name{font-weight:700;margin-bottom:5px;}
+        .team-role{
+            font-size:0.8rem;font-weight:800;
+            color:var(--primary-blue);
+            text-transform:uppercase;margin-bottom:10px;
+        }
+        .team-desc{font-size:0.85rem;color:var(--text-gray);}
+
+        .accordion-btn{
+            width:100%;padding:20px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid var(--glass-border);
+            color:#fff;font-size:1.2rem;
+            border-radius:10px;cursor:pointer;
+            display:flex;justify-content:space-between;align-items:center;
+            margin-bottom:10px;
+            transition: 0.3s; /* Added smooth transition */
+        }
+        
+        /* Added Hover and Active State */
+        .accordion-btn:hover, .accordion-btn.active {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .accordion-btn i{transition:0.3s;}
+        .accordion-btn.active i{transform:rotate(180deg);}
+        .year-content{display:none;padding:20px 0;}
+
+        footer{
+            background:#000;padding:60px 10%;
+            border-top:1px solid rgba(255,255,255,0.05);
+        }
+        .footer-wrapper{display:flex;gap:40px;flex-wrap:wrap;}
+        .contact-col p{color:var(--text-gray);font-size:0.9rem;}
+
+        @media(max-width:900px){.nav-links{display:none;}}
+    </style>
+</head>
+
+<body>
+
+<nav class="glass-nav">
+    <div class="logo">
+        <i class="fa-solid fa-bolt gradient-text"></i>
+        <span>GMLab</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="labinfo.html">Lab Info</a></li>
+        <li><a class="active">People</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="btn-glow"
+        onclick="const c=document.getElementById('contact'); if(c) c.scrollIntoView({behavior:'smooth'});">
+        Join Us
+    </button>
+</nav>
+
+<div class="content-wrapper">
+<h1>Our Team</h1>
+
+<h2>Lab Lead/Advisors</h2>
+<div class="team-grid">
+
+<div class="team-card">
+<img src="images/samundra.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Lab Lead</div>
+<div class="team-name">Dr. Samundra Gurung</div>
+<div class="team-desc">Assistant Professor, Electrical & Electronics Engineering<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/kamal.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Lab Advisor</div>
+<div class="team-name">Dr. Kamal Chapagain</div>
+<div class="team-desc">Assistant Professor, Electrical & Electronics Engineering<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/supriya.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Lab Advisor</div>
+<div class="team-name">Er. Supriya Pandeya</div>
+<div class="team-desc">Lecturer, Electrical & Electronics Engineering<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/petr.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Lab Advisor</div>
+<div class="team-name">Prof. Petr Korba</div>
+<div class="team-desc">Head of Dept. Power Systems & Smart Grids<br>Zurich University of Applied Sciences</div>
+</div>
+
+<div class="team-card">
+<img src="images/francisco.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Lab Advisor</div>
+<div class="team-name">Prof. Dr. Francisco Jurado</div>
+<div class="team-desc">Professor, Dept. of Electrical Engineering<br>University of Jaen, Spain</div>
+</div>
+
+<div class="team-card">
+<img src="images/ashish.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Industry Advisor</div>
+<div class="team-name">Er. Ashish Shrestha</div>
+<div class="team-desc">Hydropower Plant Manager<br>Mailung Khola Hydropower Pvt. Ltd</div>
+</div>
+
+<div class="team-card">
+<img src="images/sushil.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Industry Advisor</div>
+<div class="team-name">Er. Sushil Aryal</div>
+<div class="team-desc">Deputy Manager<br>Nepal Electricity Authority (NEA)</div>
+</div>
+
+</div>
+
+<h2>Research Assistants</h2>
+<span class="year-label">Current Team (2025)</span>
+
+<div class="team-grid">
+<div class="team-card">
+<img src="images/rohan.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Rohan Thapa</div>
+<div class="team-desc">EEE IV-II<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/sauzan.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Sauzan Prakash Niraula</div>
+<div class="team-desc">EEE III-II<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/shirish.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Shirish Khadka</div>
+<div class="team-desc">EEE III-II<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/sakhchyam.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Sakhchyam Sharma</div>
+<div class="team-desc">EEE III-II<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/ronnen.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Ronnen Acharya</div>
+<div class="team-desc">EEE III-I<br>Kathmandu University</div>
+</div>
+
+<div class="team-card">
+<img src="images/shubham.jpg" class="team-img"
+onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+<div class="team-role">Research Assistant Intern</div>
+<div class="team-name">Shubham Bhandari</div>
+<div class="team-desc">EEE II-I<br>Kathmandu University</div>
+</div>
+</div>
+
+<button class="accordion-btn" onclick="toggleYear('y2024',this)">
+Research Assistants 2024 <i class="fa-solid fa-chevron-down"></i>
+</button>
+<div id="y2024" class="year-content"></div>
+
+<button class="accordion-btn" onclick="toggleYear('y2023',this)">
+Research Assistants 2023 <i class="fa-solid fa-chevron-down"></i>
+</button>
+<div id="y2023" class="year-content"></div>
+
+</div>
+
+
+
+<script>
+function toggleYear(id,btn){
+    const el=document.getElementById(id);
+    const open=el.style.display==="block";
+    el.style.display=open?"none":"block";
+    btn.classList.toggle("active",!open);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research | GML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL & NAV STYLE (MATCHING LANDING PAGE) --- */
+        :root {
+            --bg-dark: #080812;
+            --text-white: #ffffff;
+            --text-gray: #a0a0b0;
+            --primary-blue: #3c91c9;
+            --primary-green: #76c043;
+            --cyan-text: #00F0FF;
+            --green-accent: #00FF85;
+            --blue-accent: #3c91c9;
+            --card-bg: #11111a;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background-color: var(--bg-dark); color: var(--text-white); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        /* EXACT NAV BAR */
+        .glass-nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-dark); border-bottom: var(--glass-border); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links li { cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; }
+        .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
+        .btn-glow {
+            padding: 10px 25px; border-radius: 50px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+            border: none; color: white; font-weight: 600; cursor: pointer;
+            box-shadow: var(--glow-shadow); transition: 0.3s;
+        }
+        .btn-glow:hover { transform: scale(1.05); }
+
+        /* --- RESEARCH PAGE CONTENT --- */
+        .content-wrapper { padding: 140px 10% 60px; max-width: 1000px; margin: 0 auto; }
+        
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: 0.3s;
+            position: relative;
+        }
+        .project-card:hover { background: rgba(255,255,255,0.03); border-color: var(--cyan-text); }
+        
+        .icon-box {
+            width: 50px; height: 50px; background: rgba(60, 145, 201, 0.15); 
+            color: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+        }
+        
+        .project-content h3 { margin: 0 0 10px 0; color: #ffffff; }
+        .project-content p { margin: 0; color: var(--text-gray); line-height: 1.6; }
+        
+        .funder {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            background: rgba(118, 192, 67, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        /* Status Badge on Research Page */
+        .status-badge {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            background: rgba(0, 255, 133, 0.2); 
+            color: var(--green-accent);
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-size: 0.75rem; 
+            font-weight: 700;
+        }
+        .status-badge.completed { background: rgba(60, 145, 201, 0.2); color: var(--blue-accent); }
+        
+        /* For mobile, stack status badge differently */
+        @media(max-width: 600px) {
+            .project-card { flex-direction: column; }
+            .status-badge { position: relative; right: auto; top: auto; margin-top: 15px; display: inline-block;}
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="logo">
+            <i class="fa-solid fa-bolt gradient-text"></i>
+            <span>GMLab</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="labinfo.html">Lab Info</a></li>
+            <li><a href="people.html">People</a></li>
+            <li><a href="research.html" class="active">Research</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
+    </nav>
+
+    <div class="content-wrapper">
+        <h1 style="margin-bottom: 40px;">Research & Projects</h1>
+
+        <div class="project-card">
+            <div class="icon-box"><i class="fa-solid fa-circle-nodes"></i></div>
+            <div class="project-content">
+                <h3>IGrid</h3>
+                <p>Intelligent Grid is distributed computing and platforms for data management focused on efficient, scalable data handling, and real-time monitoring with a focus on sustainability.</p>
+                <span class="status-badge">Ongoing</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+            <div class="project-content">
+                <h3>D-VA Project</h3>
+                <p>Distribution Automation Tool for Visualization and Control of Automated Devices for a Reliable and Efficient Electric Distribution System.</p>
+                <span class="funder">Funded by Energize Nepal</span>
+                <span class="status-badge completed">Completed</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="icon-box"><i class="fa-solid fa-city"></i></div>
+            <div class="project-content">
+                <h3>REDS Project</h3>
+                <p>Smart Urban Electric Distribution for a Reliable and Efficient Electric Power Supply to all Consumers.</p>
+                <span class="funder">Funded by NAST Nepal</span>
+                <span class="status-badge">Ongoing</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
+            <div class="project-content">
+                <h3>Net Zero Strategies</h3>
+                <p>Strategies for a Secure Operation of Net Zero Power Systems.</p>
+                <span class="funder">Funded by Leading House for Research Collaboration (South Asia)</span>
+                <span class="status-badge">Ongoing</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
