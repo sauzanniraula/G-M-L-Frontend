@@ -65,6 +65,88 @@
         /* --- PAGE SPECIFIC CONTENT STYLES --- */
         .content-wrapper { padding: 150px 10% 60px; text-align: center; }
         .placeholder-box { background: var(--card-bg); padding: 50px; border-radius: 15px; border: 1px dashed rgba(255,255,255,0.1); }
+    
+        /* --- MOBILE RESPONSIVE STYLES (Paste at the bottom of style tag) --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text-white);
+    cursor: pointer;
+    margin-right: 15px;
+    order: 2; /* Position between logo and button */
+}
+
+/* 2. Media Query for Tablets & Mobile (Screens smaller than 900px) */
+@media (max-width: 900px) {
+    
+    /* General Layout Padding */
+    .content-wrapper, .page-section, .dark-section {
+        padding: 100px 5% 40px;
+    }
+
+    /* Navigation Drawer */
+    .hamburger { display: block; }
+    .btn-glow { order: 3; padding: 8px 15px; font-size: 0.85rem; }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        /* Hidden by default, slides down when active */
+        transform: translateY(-200%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+    }
+    
+    /* Active State for Menu */
+    .nav-links.mobile-active {
+        transform: translateY(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Stack Grids Vertically (1 Column) */
+    .grid-3-col, 
+    .projects-list, 
+    .gallery-grid, 
+    .contact-grid-layout, 
+    .team-grid,
+    .scope-container,
+    .stage-flow-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hero Section Fixes */
+    .hero-container { flex-direction: column-reverse; text-align: center; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-visual { width: 100%; height: auto; margin-bottom: 30px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Component Fixes */
+    .project-row { flex-direction: column; text-align: center; gap: 15px; }
+    .proj-icon { margin-right: 0; margin-bottom: 10px; }
+    .project-header-line { flex-wrap: wrap; }
+    .status-badge { margin-left: 0; margin-top: 5px; }
+    
+    /* Chart/Diagram Fixes */
+    .venn-wrapper { flex-direction: column; height: auto; margin-top: 50px; }
+    .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+    .experts-wrapper { position: static; transform: none; margin-top: 15px; flex-direction: column; }
+    .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+    .level-2 { flex-direction: column; }
+    
+    /* Table Scroll */
+    .custom-table-wrapper { overflow-x: auto; }
+}
+
     </style>
 </head>
 <body>
@@ -73,13 +155,17 @@
             <i class="fa-solid fa-bolt gradient-text"></i>
             <span>GMLab</span>
         </div>
-        <ul class="nav-links">
+<div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="labinfo.html">Lab Info</a></li>
-            <li><a href="people.html">People</a></li>
-            <li><a href="research.html">Research</a></li>
-            <li><a href="events.html" class="active">Events</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="Lab_Information.html">Lab Info</a></li>
+            <li><a href="People.html">People</a></li>
+            <li><a href="Research.html">Research</a></li>
+            <li><a href="Gallery.html">Gallery</a></li>
+            <li><a href="Events.html" class="active">Events</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
@@ -91,5 +177,40 @@
             <p style="font-size: 1.2rem; color: var(--text-gray);">Stay tuned for upcoming workshops, conferences, and updates.</p>
         </div>
     </div>
+
+    <script>
+    // --- MOBILE MENU TOGGLE SCRIPT ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the active class
+            navLinks.classList.toggle('mobile-active');
+            
+            // Switch icon between 'Bars' and 'X'
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close menu automatically when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('mobile-active');
+            const icon = hamburger.querySelector('i');
+            if(icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    });
+</script>
 </body>
 </html>

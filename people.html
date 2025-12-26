@@ -33,7 +33,7 @@
             -webkit-background-clip:text;-webkit-text-fill-color:transparent;
         }
         .nav-links{display:flex;list-style:none;gap:30px;}
-        .nav-links li{color:var(--text-gray);}
+        .nav-links li{color:var(--text-gray);cursor: pointer;transition:0.3s;}
         .nav-links li:hover,.nav-links a.active{color:#fff;}
         .btn-glow{
             padding:10px 25px;border-radius:50px;
@@ -47,9 +47,15 @@
             border-left:4px solid var(--primary-blue);
             padding-left:15px;margin:60px 0 30px;font-size:1.8rem;
         }
-        .year-label{
-            display:block;color:var(--primary-green);
-            font-weight:700;margin-bottom:20px;
+        
+        .project-label {
+            display: block;
+            font-size: 1.2rem; 
+            color: var(--primary-green);
+            font-weight: 700; 
+            margin: 30px 0 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
 
         .team-grid{
@@ -83,17 +89,18 @@
             width:100%;padding:20px;
             background:rgba(255,255,255,0.03);
             border:1px solid var(--glass-border);
-            color:#fff;font-size:1.2rem;
+            color:#fff;font-size:1.1rem;
             border-radius:10px;cursor:pointer;
             display:flex;justify-content:space-between;align-items:center;
             margin-bottom:10px;
-            transition: 0.3s; /* Added smooth transition */
+            transition: 0.3s;
+            text-align: left;
         }
         
-        /* Added Hover and Active State */
         .accordion-btn:hover, .accordion-btn.active {
             color: var(--primary-green);
             border-color: var(--primary-green);
+            background: rgba(118, 192, 67, 0.05);
         }
 
         .accordion-btn i{transition:0.3s;}
@@ -107,7 +114,89 @@
         .footer-wrapper{display:flex;gap:40px;flex-wrap:wrap;}
         .contact-col p{color:var(--text-gray);font-size:0.9rem;}
 
-        @media(max-width:900px){.nav-links{display:none;}}
+        /* REMOVED THE CONFLICTING LINE: @media(max-width:900px){.nav-links{display:none;}} */
+
+        /* --- MOBILE RESPONSIVE STYLES (Paste at the bottom of style tag) --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text-white);
+    cursor: pointer;
+    margin-right: 15px;
+    order: 2; /* Position between logo and button */
+}
+
+/* 2. Media Query for Tablets & Mobile (Screens smaller than 900px) */
+@media (max-width: 900px) {
+    
+    /* General Layout Padding */
+    .content-wrapper, .page-section, .dark-section {
+        padding: 100px 5% 40px;
+    }
+
+    /* Navigation Drawer */
+    .hamburger { display: block; }
+    .btn-glow { order: 3; padding: 8px 15px; font-size: 0.85rem; }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        /* Hidden by default, slides down when active */
+        transform: translateY(-200%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+        display: flex; /* Ensure it's flex */
+    }
+    
+    /* Active State for Menu */
+    .nav-links.mobile-active {
+        transform: translateY(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Stack Grids Vertically (1 Column) */
+    .grid-3-col, 
+    .projects-list, 
+    .gallery-grid, 
+    .contact-grid-layout, 
+    .team-grid,
+    .scope-container,
+    .stage-flow-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hero Section Fixes */
+    .hero-container { flex-direction: column-reverse; text-align: center; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-visual { width: 100%; height: auto; margin-bottom: 30px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Component Fixes */
+    .project-row { flex-direction: column; text-align: center; gap: 15px; }
+    .proj-icon { margin-right: 0; margin-bottom: 10px; }
+    .project-header-line { flex-wrap: wrap; }
+    .status-badge { margin-left: 0; margin-top: 5px; }
+    
+    /* Chart/Diagram Fixes */
+    .venn-wrapper { flex-direction: column; height: auto; margin-top: 50px; }
+    .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+    .experts-wrapper { position: static; transform: none; margin-top: 15px; flex-direction: column; }
+    .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+    .level-2 { flex-direction: column; }
+    
+    /* Table Scroll */
+    .custom-table-wrapper { overflow-x: auto; }
+}
     </style>
 </head>
 
@@ -118,17 +207,20 @@
         <i class="fa-solid fa-bolt gradient-text"></i>
         <span>GMLab</span>
     </div>
-    <ul class="nav-links">
+    <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="labinfo.html">Lab Info</a></li>
+        <li><a href="Lab_Information.html">Lab Info</a></li>
         <li><a class="active">People</a></li>
-        <li><a href="research.html">Research</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="Research.html">Research</a></li>
+        <li><a href="Gallery.html">Gallery</a></li>
+        <li><a href="Events.html">Events</a></li>
         <li><a href="index.html#contact">Contact</a></li>
     </ul>
-    <button class="btn-glow"
-        onclick="const c=document.getElementById('contact'); if(c) c.scrollIntoView({behavior:'smooth'});">
+    <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});">
         Join Us
     </button>
 </nav>
@@ -138,131 +230,197 @@
 
 <h2>Lab Lead/Advisors</h2>
 <div class="team-grid">
-
-<div class="team-card">
-<img src="images/samundra.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Lab Lead</div>
-<div class="team-name">Dr. Samundra Gurung</div>
-<div class="team-desc">Assistant Professor, Electrical & Electronics Engineering<br>Kathmandu University</div>
+    <div class="team-card">
+        <img src="ourteam/Samundra-Gurung.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Lab Lead</div>
+        <div class="team-name">Dr. Samundra Gurung</div>
+        <div class="team-desc">Assistant Professor, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Kamal-Chapagain.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Lab Advisor</div>
+        <div class="team-name">Dr. Kamal Chapagain</div>
+        <div class="team-desc">Assistant Professor, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Supriya-Pandey.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Lab Advisor</div>
+        <div class="team-name">Er. Supriya Pandeya</div>
+        <div class="team-desc">Lecturer, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Petr-Korba.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Lab Advisor</div>
+        <div class="team-name">Prof. Petr Korba</div>
+        <div class="team-desc">Zurich University, Switzerland</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Francisco-Jurado.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Lab Advisor</div>
+        <div class="team-name">Prof. Dr. Francisco Jurado</div>
+        <div class="team-desc">University of Jaen, Spain</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Aashish-Shrestha.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Industry Advisor</div>
+        <div class="team-name">Er. Ashish Shrestha</div>
+        <div class="team-desc">Mailung Khola Hydropower</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Sushil-Aryal.webp" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Industry Advisor</div>
+        <div class="team-name">Er. Sushil Aryal</div>
+        <div class="team-desc">Nepal Electricity Authority</div>
+    </div>
 </div>
 
-<div class="team-card">
-<img src="images/kamal.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Lab Advisor</div>
-<div class="team-name">Dr. Kamal Chapagain</div>
-<div class="team-desc">Assistant Professor, Electrical & Electronics Engineering<br>Kathmandu University</div>
-</div>
+<h2>Project Teams & Members</h2>
 
-<div class="team-card">
-<img src="images/supriya.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Lab Advisor</div>
-<div class="team-name">Er. Supriya Pandeya</div>
-<div class="team-desc">Lecturer, Electrical & Electronics Engineering<br>Kathmandu University</div>
-</div>
-
-<div class="team-card">
-<img src="images/petr.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Lab Advisor</div>
-<div class="team-name">Prof. Petr Korba</div>
-<div class="team-desc">Head of Dept. Power Systems & Smart Grids<br>Zurich University of Applied Sciences</div>
-</div>
-
-<div class="team-card">
-<img src="images/francisco.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Lab Advisor</div>
-<div class="team-name">Prof. Dr. Francisco Jurado</div>
-<div class="team-desc">Professor, Dept. of Electrical Engineering<br>University of Jaen, Spain</div>
-</div>
-
-<div class="team-card">
-<img src="images/ashish.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Industry Advisor</div>
-<div class="team-name">Er. Ashish Shrestha</div>
-<div class="team-desc">Hydropower Plant Manager<br>Mailung Khola Hydropower Pvt. Ltd</div>
-</div>
-
-<div class="team-card">
-<img src="images/sushil.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Industry Advisor</div>
-<div class="team-name">Er. Sushil Aryal</div>
-<div class="team-desc">Deputy Manager<br>Nepal Electricity Authority (NEA)</div>
-</div>
-
-</div>
-
-<h2>Research Assistants</h2>
-<span class="year-label">Current Team (2025)</span>
-
+<span class="project-label">IGrid Project (May 2025 - April 2026) - Current Team</span>
 <div class="team-grid">
-<div class="team-card">
-<img src="images/rohan.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Rohan Thapa</div>
-<div class="team-desc">EEE IV-II<br>Kathmandu University</div>
+    <div class="team-card">
+        <img src="ourteam/Rohan-Thapa.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Rohan Thapa</div>
+        <div class="team-desc">EEE IV-II, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Saujan-Niraula.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Saujan Prakash Niroula</div>
+        <div class="team-desc">Undergraduate EEE, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Shrish-Khadka.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Shirish Khadka</div>
+        <div class="team-desc">Undergraduate EEE, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Sakchyam-Sharma.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Sakhchyam Sharma</div>
+        <div class="team-desc">Undergraduate EEE, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Ronen-Acharya.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Ronnen Acharya</div>
+        <div class="team-desc">Undergraduate EEE, KU</div>
+    </div>
+    <div class="team-card">
+        <img src="ourteam/Shubham_photo.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+        <div class="team-role">Research Assistant Intern</div>
+        <div class="team-name">Shubham Bhandari</div>
+        <div class="team-desc">Undergraduate EEE, KU</div>
+    </div>
 </div>
 
-<div class="team-card">
-<img src="images/sauzan.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Sauzan Prakash Niraula</div>
-<div class="team-desc">EEE III-II<br>Kathmandu University</div>
-</div>
-
-<div class="team-card">
-<img src="images/shirish.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Shirish Khadka</div>
-<div class="team-desc">EEE III-II<br>Kathmandu University</div>
-</div>
-
-<div class="team-card">
-<img src="images/sakhchyam.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Sakhchyam Sharma</div>
-<div class="team-desc">EEE III-II<br>Kathmandu University</div>
-</div>
-
-<div class="team-card">
-<img src="images/ronnen.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Ronnen Acharya</div>
-<div class="team-desc">EEE III-I<br>Kathmandu University</div>
-</div>
-
-<div class="team-card">
-<img src="images/shubham.jpg" class="team-img"
-onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
-<div class="team-role">Research Assistant Intern</div>
-<div class="team-name">Shubham Bhandari</div>
-<div class="team-desc">EEE II-I<br>Kathmandu University</div>
-</div>
-</div>
-
-<button class="accordion-btn" onclick="toggleYear('y2024',this)">
-Research Assistants 2024 <i class="fa-solid fa-chevron-down"></i>
+<button class="accordion-btn" onclick="toggleYear('netzero',this)">
+    Net-Zero Project Team (Aug 2024 - July 2025) <i class="fa-solid fa-chevron-down"></i>
 </button>
-<div id="y2024" class="year-content"></div>
+<div id="netzero" class="year-content">
+    <div class="team-grid">
+        <div class="team-card">
+            <img src="ourteam/Prasun-Bajracharya.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Member</div>
+            <div class="team-name">Mr. Prasun Bajracharya</div>
+            <div class="team-desc">Research Associate</div>
+        </div>
+        </div>
+</div>
 
-<button class="accordion-btn" onclick="toggleYear('y2023',this)">
-Research Assistants 2023 <i class="fa-solid fa-chevron-down"></i>
+<button class="accordion-btn" onclick="toggleYear('reds',this)">
+    REDS Project Team (Mar 2024 - Feb 2025) <i class="fa-solid fa-chevron-down"></i>
 </button>
-<div id="y2023" class="year-content"></div>
+<div id="reds" class="year-content">
+    <div class="team-grid">
+        <div class="team-card">
+            <img src="ourteam/Anu-Dhakal.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">RA Intern (Masters)</div>
+            <div class="team-name">Ms. Anu Dhakal</div>
+            <div class="team-desc">Masters Student</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Rupesh-Neupane.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">RA Intern</div>
+            <div class="team-name">Mr. Rupesh Neupane</div>
+            <div class="team-desc">Undergraduate EEE, KU</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Rohan-Thapa.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">RA Intern</div>
+            <div class="team-name">Mr. Rohan Thapa</div>
+            <div class="team-desc">Undergraduate EEE, KU</div>
+        </div>
+    </div>
+</div>
+
+<button class="accordion-btn" onclick="toggleYear('dva',this)">
+    D-VA Grid Project Team (Feb 2023 - Dec 2024) <i class="fa-solid fa-chevron-down"></i>
+</button>
+<div id="dva" class="year-content">
+    <div class="team-grid">
+        <div class="team-card">
+            <img src="ourteam/Bibek-Mallik.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Researcher</div>
+            <div class="team-name">Mr. Bibek Mallik</div>
+            <div class="team-desc">Project Member</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Basanta-Pokhrel.jpeg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Researcher</div>
+            <div class="team-name">Dr. Basanta Raj Pokhrel</div>
+            <div class="team-desc">Project Member</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Phurba-Sherpa.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Research Assistant</div>
+            <div class="team-name">Mr. Phurba Tshering Sherpa</div>
+            <div class="team-desc">Member</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Nabindra-Shrestha.png" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Research Assistant</div>
+            <div class="team-name">Mr. Nabindra Raj Shrestha</div>
+            <div class="team-desc">Member</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Pratyush-Poudel.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Member</div>
+            <div class="team-name">Mr. Pratyush Poudel</div>
+            <div class="team-desc">Past Member</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Ayushma-Bhandari.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">RA Intern</div>
+            <div class="team-name">Ms. Ayushma Bhandari</div>
+            <div class="team-desc">Undergraduate EEE, KU</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Anil-Poudel.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">RA Intern</div>
+            <div class="team-name">Mr. Anil Poudel</div>
+            <div class="team-desc">Undergraduate EEE, KU</div>
+        </div>
+        <div class="team-card">
+            <img src="ourteam/Abhinash-Jha.jpg" class="team-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="team-role">Research Assistant</div>
+            <div class="team-name">Mr. Abhinash Jha</div>
+            <div class="team-desc">EEE, KU</div>
+        </div>
+    </div>
+</div>
 
 </div>
 
-
+<footer id="contact">
+    <div class="footer-wrapper">
+        <div class="contact-col">
+            <p>© Kathmandu University — 2025 | Grid Modernization Lab</p>
+        </div>
+    </div>
+</footer>
 
 <script>
 function toggleYear(id,btn){
@@ -272,6 +430,39 @@ function toggleYear(id,btn){
     btn.classList.toggle("active",!open);
 }
 </script>
+<script>
+    // --- MOBILE MENU TOGGLE SCRIPT ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
 
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the active class
+            navLinks.classList.toggle('mobile-active');
+            
+            // Switch icon between 'Bars' and 'X'
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close menu automatically when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('mobile-active');
+            const icon = hamburger.querySelector('i');
+            if(icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    });
+</script>
 </body>
 </html>

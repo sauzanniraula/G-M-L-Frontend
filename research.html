@@ -14,6 +14,7 @@
             --text-gray: #a0a0b0;
             --primary-blue: #3c91c9;
             --primary-green: #76c043;
+            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
             --cyan-text: #00F0FF;
             --green-accent: #00FF85;
             --blue-accent: #3c91c9;
@@ -24,8 +25,27 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
-        body { background-color: var(--bg-dark); color: var(--text-white); line-height: 1.6; }
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-white); 
+            line-height: 1.6; 
+            overflow-x: hidden; /* Prevent horizontal scroll from orbs */
+        }
         a { text-decoration: none; color: inherit; }
+
+        /* --- THEME BACKGROUND ORBS --- */
+        .orb {
+            position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4;
+            animation: floatOrb 10s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary-blue); top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: var(--primary-green); bottom: 10%; right: -50px; animation-delay: 2s; }
+        .orb-3 { width: 200px; height: 200px; background: #5a2e91; top: 40%; left: 30%; opacity: 0.2; animation-delay: 4s; }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(30px) scale(1.1); }
+        }
 
         /* EXACT NAV BAR */
         .glass-nav {
@@ -47,36 +67,64 @@
             border: none; color: white; font-weight: 600; cursor: pointer;
             box-shadow: var(--glow-shadow); transition: 0.3s;
         }
-        .btn-glow:hover { transform: scale(1.05); }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
 
         /* --- RESEARCH PAGE CONTENT --- */
         .content-wrapper { padding: 140px 10% 60px; max-width: 1000px; margin: 0 auto; }
         
+        /* UPDATED PROJECT CARD STYLES */
         .project-card {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             margin-bottom: 25px;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
             transition: 0.3s;
-            position: relative;
+            display: flex;
+            flex-direction: column; /* Stack header and body vertically */
         }
-        .project-card:hover { background: rgba(255,255,255,0.03); border-color: var(--cyan-text); }
+        .project-card:hover { background: rgba(255,255,255,0.03); border-color: var(--cyan-text); transform: translateY(-5px); }
         
+        /* The Header Line: Icon | Title | Badge */
+        .project-header-line {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
         .icon-box {
-            width: 50px; height: 50px; background: rgba(60, 145, 201, 0.15); 
-            color: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+            width: 45px; height: 45px; background: rgba(60, 145, 201, 0.15); 
+            color: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
         }
         
-        .project-content h3 { margin: 0 0 10px 0; color: #ffffff; }
-        .project-content p { margin: 0; color: var(--text-gray); line-height: 1.6; }
+        .project-title {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-grow: 1; /* Pushes badge to the right */
+        }
+        
+        .status-badge {
+            background: rgba(0, 255, 133, 0.15); 
+            color: var(--green-accent);
+            padding: 5px 12px; 
+            border-radius: 50px; 
+            font-size: 0.75rem; 
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .status-badge.completed { background: rgba(60, 145, 201, 0.15); color: var(--blue-accent); }
+
+        /* Content Body */
+        .project-body p { margin: 0 0 15px 0; color: var(--text-gray); line-height: 1.6; }
         
         .funder {
             display: inline-block;
-            margin-top: 10px;
+            margin-bottom: 10px;
             font-size: 0.8rem;
             color: var(--primary-green);
             font-weight: 600;
@@ -85,40 +133,189 @@
             border-radius: 4px;
         }
 
-        /* Status Badge on Research Page */
-        .status-badge {
-            position: absolute;
-            right: 30px;
-            top: 30px;
-            background: rgba(0, 255, 133, 0.2); 
-            color: var(--green-accent);
-            padding: 6px 12px; 
-            border-radius: 6px; 
-            font-size: 0.75rem; 
-            font-weight: 700;
+        /* Hidden Details Section */
+        .project-details-hidden {
+            display: none;
+            width: 100%;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
         }
-        .status-badge.completed { background: rgba(60, 145, 201, 0.2); color: var(--blue-accent); }
+        .detail-row { margin-bottom: 8px; }
+        .detail-label { color: var(--cyan-text); font-weight: 600; margin-right: 5px; }
+
+        .view-btn {
+            display: inline-block; /* Added to support link styling */
+            background: transparent; border: 1px solid var(--primary-blue);
+            color: var(--primary-blue); padding: 6px 18px; border-radius: 50px;
+            font-size: 0.85rem; cursor: pointer; transition: 0.3s;
+            margin-top: 5px;
+            text-decoration: none;
+        }
+        .view-btn:hover { background: var(--primary-blue); color: white; box-shadow: 0 0 15px rgba(60, 145, 201, 0.4); }
         
-        /* For mobile, stack status badge differently */
-        @media(max-width: 600px) {
-            .project-card { flex-direction: column; }
-            .status-badge { position: relative; right: auto; top: auto; margin-top: 15px; display: inline-block;}
+        /* --- PUBLICATIONS SECTION STYLES --- */
+        .section-heading {
+            margin: 80px 0 30px;
+            font-size: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            color: white;
         }
+
+        .publication-card {
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--primary-blue);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            transition: 0.3s;
+        }
+        .publication-card:hover { background: rgba(255,255,255,0.04); transform: translateX(5px); }
+
+        .pub-badge {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            color: #b700ff; background: rgba(157, 0, 255, 0.1);
+            padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px;
+        }
+        
+        .publication-card h4 { font-size: 1.2rem; color: white; margin-bottom: 8px; line-height: 1.4; }
+        .authors { font-size: 0.9rem; color: var(--text-gray); font-style: italic; margin-bottom: 15px; }
+        
+        .btn-sm {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.85rem; color: var(--cyan-text); font-weight: 600;
+            text-decoration: none; border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 6px 15px; border-radius: 50px; transition: 0.3s;
+        }
+        .btn-sm:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--cyan-text); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+
+        @media(max-width: 600px) {
+            .project-header-line { flex-wrap: wrap; }
+            .status-badge { margin-left: 0; }
+            /* REMOVED: .nav-links { display: none; } */
+        }
+        /* --- MOBILE RESPONSIVE STYLES (Paste at the bottom of style tag) --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text-white);
+    cursor: pointer;
+    margin-right: 15px;
+    order: 2; /* Position between logo and button */
+}
+
+/* 2. Media Query for Tablets & Mobile (Screens smaller than 900px) */
+@media (max-width: 900px) {
+    
+    /* General Layout Padding */
+    .content-wrapper, .page-section, .dark-section {
+        padding: 100px 5% 40px;
+    }
+
+    /* Navigation Drawer */
+    .hamburger { display: block; }
+    .btn-glow { order: 3; padding: 8px 15px; font-size: 0.85rem; }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        /* Hidden by default, slides down when active */
+        transform: translateY(-200%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+        display: flex; /* Ensure it is flex */
+    }
+    
+    /* Active State for Menu */
+    .nav-links.mobile-active {
+        transform: translateY(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Stack Grids Vertically (1 Column) */
+    .grid-3-col, 
+    .projects-list, 
+    .gallery-grid, 
+    .contact-grid-layout, 
+    .team-grid,
+    .scope-container,
+    .stage-flow-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hero Section Fixes */
+    .hero-container { flex-direction: column-reverse; text-align: center; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-visual { width: 100%; height: auto; margin-bottom: 30px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Component Fixes */
+    .project-row { flex-direction: column; text-align: center; gap: 15px; }
+    .proj-icon { margin-right: 0; margin-bottom: 10px; }
+    .project-header-line { flex-wrap: wrap; }
+    .status-badge { margin-left: 0; margin-top: 5px; }
+    
+    /* Chart/Diagram Fixes */
+    .venn-wrapper { flex-direction: column; height: auto; margin-top: 50px; }
+    .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+    .experts-wrapper { position: static; transform: none; margin-top: 15px; flex-direction: column; }
+    .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+    .level-2 { flex-direction: column; }
+    
+    /* Table Scroll */
+    .custom-table-wrapper { overflow-x: auto; }
+}
     </style>
+    <script>
+        function toggleDetails(id) {
+            var x = document.getElementById(id);
+            var btn = document.getElementById('btn-' + id);
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                btn.innerHTML = "View Details";
+            } else {
+                x.style.display = "block";
+                btn.innerHTML = "Hide Details";
+            }
+        }
+    </script>
 </head>
 <body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
     <nav class="glass-nav">
         <div class="logo">
             <i class="fa-solid fa-bolt gradient-text"></i>
             <span>GMLab</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="labinfo.html">Lab Info</a></li>
-            <li><a href="people.html">People</a></li>
-            <li><a href="research.html" class="active">Research</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+
+        <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+        <ul class="nav-links" id="nav-links"> <li><a href="index.html">Home</a></li>
+            <li><a href="Lab_Information.html">Lab Info</a></li>
+            <li><a href="People.html">People</a></li>
+            <li><a href="Research.html" class="active">Research</a></li>
+            <li><a href="Gallery.html">Gallery</a></li>
+            <li><a href="Events.html">Events</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
@@ -128,43 +325,156 @@
         <h1 style="margin-bottom: 40px;">Research & Projects</h1>
 
         <div class="project-card">
-            <div class="icon-box"><i class="fa-solid fa-circle-nodes"></i></div>
-            <div class="project-content">
-                <h3>IGrid</h3>
-                <p>Intelligent Grid is distributed computing and platforms for data management focused on efficient, scalable data handling, and real-time monitoring with a focus on sustainability.</p>
+            <div class="project-header-line">
+                <div class="icon-box"><i class="fa-solid fa-circle-nodes"></i></div>
+                <h3 class="project-title">IGrid</h3>
                 <span class="status-badge">Ongoing</span>
             </div>
-        </div>
-
-        <div class="project-card">
-            <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
-            <div class="project-content">
-                <h3>D-VA Project</h3>
-                <p>Distribution Automation Tool for Visualization and Control of Automated Devices for a Reliable and Efficient Electric Distribution System.</p>
-                <span class="funder">Funded by Energize Nepal</span>
-                <span class="status-badge completed">Completed</span>
+            
+            <div class="project-body">
+                <p>Intelligent Monitoring and Control of Distribution Grid for Enhanced Electric Efficiency and Security.</p>
+                <span class="funder">Funded by RDI, Kathmandu University</span>
+                <br>
+                <button id="btn-igrid-details" class="view-btn" onclick="toggleDetails('igrid-details')">View Details</button>
+                
+                <div id="igrid-details" class="project-details-hidden">
+                    <div class="detail-row"><span class="detail-label">Project Title:</span> Intelligent Monitoring and Control of Distribution Grid for Enhanced Electric Efficiency and Security (IGrid)</div>
+                    <div class="detail-row"><span class="detail-label">Duration:</span> May 2025 - April 2026</div>
+                    <div class="detail-row"><span class="detail-label">Funding Agency:</span> RDI, Kathmandu University</div>
+                    <div class="detail-row"><span class="detail-label">Project Team:</span> Dr. Samundra Gurung, Ms. Supriya Pandeya, Mr. Rohan Thapa, Mr. Sakchyam Sharma, Mr. Shirish Khdaka, Mr. Ronen Acharya, Mr. Shubham Niraula, Mr. Sauzan Prakash Niraula</div>
+                </div>
             </div>
         </div>
-
+        
         <div class="project-card">
-            <div class="icon-box"><i class="fa-solid fa-city"></i></div>
-            <div class="project-content">
-                <h3>REDS Project</h3>
-                <p>Smart Urban Electric Distribution for a Reliable and Efficient Electric Power Supply to all Consumers.</p>
-                <span class="funder">Funded by NAST Nepal</span>
+            <div class="project-header-line">
+                <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
+                <h3 class="project-title">Net Zero Strategies</h3>
                 <span class="status-badge">Ongoing</span>
             </div>
-        </div>
 
-        <div class="project-card">
-            <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
-            <div class="project-content">
-                <h3>Net Zero Strategies</h3>
+            <div class="project-body">
                 <p>Strategies for a Secure Operation of Net Zero Power Systems.</p>
                 <span class="funder">Funded by Leading House for Research Collaboration (South Asia)</span>
-                <span class="status-badge">Ongoing</span>
+                <br>
+                <button id="btn-netzero-details" class="view-btn" onclick="toggleDetails('netzero-details')">View Details</button>
+
+                <div id="netzero-details" class="project-details-hidden">
+                    <div class="detail-row"><span class="detail-label">Duration:</span> August 2024 - July 2025</div>
+                    <div class="detail-row"><span class="detail-label">Project Partners:</span> DoEEE (KU), Zurich University of Applied Sciences (ZHAW)</div>
+                    <div class="detail-row"><span class="detail-label">Project Team:</span> Dr. Rafael Segundo Felix, Prof. Dr. Petr Korba, Prof. Dr. Ram Kaji Budhathoki, Dr. Samundra Gurung, Mr. Prasun Bajracharya</div>
+                    <div class="detail-row"><span class="detail-label">Outputs:</span> Mobility and academic exchange, Phasor Measurement Units (PMU) installation at Kathmandu University.</div>
+                </div>
             </div>
         </div>
+
+        <div class="project-card">
+            <div class="project-header-line">
+                <div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+                <h3 class="project-title">D-VA Grid Project</h3>
+                <span class="status-badge completed">Completed</span>
+            </div>
+
+            <div class="project-body">
+                <p>Distribution Automation Tool for Visualization and Control of Automated Devices for a Reliable and Efficient Electric Distribution System.</p>
+                <span class="funder">Funded by Energize Nepal</span>
+                <br>
+                <button id="btn-dva-details" class="view-btn" onclick="toggleDetails('dva-details')">View Details</button>
+                
+                <a href="https://dvacore.ku.edu.np/" target="_blank" class="view-btn" style="margin-left: 10px;">View D-VA Distview software <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+
+                <div id="dva-details" class="project-details-hidden">
+                    <div class="detail-row"><span class="detail-label">Duration:</span> February 2023 - December 2024</div>
+                    <div class="detail-row"><span class="detail-label">Project Partners:</span> DoEEE (KU), NTNU (Norway), K&A Engineering Consultancy P.C.</div>
+                    <div class="detail-row"><span class="detail-label">Project Team:</span> Dr. Samundra Gurung, Dr. Kamal Chapagain, Dr. Basanta Raj Pokhrel, Mr. Bibek Mallik, Mr. Phurba Tshering Sherpa, Mr. Nabindra Raj Shrestha, Mr. Pratyush Poudal, Ms. Ayushma Bhandari, Mr. Anil Poudel, Mr. Abhinash Jha</div>
+                    <div class="detail-row"><span class="detail-label">Outputs:</span> Dynamic Visualization of the KU distribution system, 4 Conference papers.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header-line">
+                <div class="icon-box"><i class="fa-solid fa-city"></i></div>
+                <h3 class="project-title">REDS Project</h3>
+                <span class="status-badge completed">Completed</span>
+            </div>
+
+            <div class="project-body">
+                <p>Smart Urban Electric Distribution for a Reliable and Efficient Electric Power Supply to all Consumers.</p>
+                <span class="funder">Funded by NAST Nepal</span>
+                <br>
+                <button id="btn-reds-details" class="view-btn" onclick="toggleDetails('reds-details')">View Details</button>
+
+                <div id="reds-details" class="project-details-hidden">
+                    <div class="detail-row"><span class="detail-label">Duration:</span> March 2024 - February 2025</div>
+                    <div class="detail-row"><span class="detail-label">RA-Interns:</span> Ms. Anu Dhakal (Masters student), Mr. Rohan Thapa (Undergraduate student), Mr. Rupesh Neupane (Undergraduate student)</div>
+                    <div class="detail-row"><span class="detail-label">Output:</span> 1 Conference presentation, 1 Journal publication</div>
+                    <div class="detail-row">
+                        <span class="detail-label">Executive Summary:</span> <br>
+                        This study focuses on the development of a tool for outage management. Data from various field devices such as smart meters and automated devices will be analyzed and visualized to help electric system operators monitor voltage quality. An AI-based algorithm will utilize this data to identify precise electrical fault locations and provide correct procedures for power restoration. The tool aims to reduce frequent power outages and energy loss, ultimately contributing to better urban development.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">Publications</h2>
+
+        <div class="publication-card">
+            <span class="pub-badge">Conference Paper (ISIE 2024)</span>
+            <h4>A Custom Developed Flexible Tool for Real-Time Distribution Grid Visualization</h4>
+            <p class="authors">Nabindra Raj Shrestha, Phurba Tshering Sherpa, Samundra Gurung*, Kamal Chapagain, Bibek Mallik, Basanta Raj Pokhrel</p>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10595677" class="btn-sm" target="_blank">View Source <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+
+        <div class="publication-card">
+            <span class="pub-badge">Conference Paper (ECTI-CON 2024)</span>
+            <h4>Real Time Distribution Grid Visualization using Smart Meters</h4>
+            <p class="authors">Phurba Tshering Sherpa, Nabindra Raj Shrestha, Kamal Chapagain, Basanta Raj Pokhrel, Sudhan Dahal, Prabal Bhattarai, Samundra Gurung*</p>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10594919" class="btn-sm" target="_blank">View Source <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+
+        <div class="publication-card">
+            <span class="pub-badge">Journal Manuscript (IET)</span>
+            <h4>Development of a Test-Bed for a Dynamic Visualization of the Distribution Grid</h4>
+            <p class="authors">Phurba Tshering Sherpa, Nabindra Raj Shrestha, Samundra Gurung*, Kamal Chapagain, Basanta Raj Pokhrel, Bibek Mallik</p>
+            <a href="#" class="btn-sm" target="_blank">View Source <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+
     </div>
+
+    <script>
+    // --- MOBILE MENU TOGGLE SCRIPT ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the active class
+            navLinks.classList.toggle('mobile-active');
+            
+            // Switch icon between 'Bars' and 'X'
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close menu automatically when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('mobile-active');
+            const icon = hamburger.querySelector('i');
+            if(icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    });
+</script>
 </body>
 </html>

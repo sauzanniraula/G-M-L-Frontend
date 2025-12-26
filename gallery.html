@@ -81,7 +81,7 @@
         /* Gallery Grid */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
 
@@ -93,7 +93,7 @@
             overflow: hidden;
             transition: 0.3s ease;
             position: relative;
-            group: hover;
+            display: flex; flex-direction: column;
         }
 
         .gallery-card:hover {
@@ -102,34 +102,163 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* --- UPDATED IMG WRAPPER FOR SLIDESHOW --- */
         .img-wrapper {
-            width: 100%; height: 220px; overflow: hidden; position: relative;
+            width: 100%; height: 200px; overflow: hidden; position: relative;
         }
 
         .gallery-img {
             width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.5s ease;
+            position: absolute; top: 0; left: 0; /* Stack images on top of each other */
+            opacity: 0; /* Hide by default */
+            transition: opacity 1s ease-in-out, transform 0.5s ease;
+            cursor: pointer; /* Show pointer to indicate clickable */
         }
 
-        .gallery-card:hover .gallery-img { transform: scale(1.1); }
+        /* Only show the active image */
+        .gallery-img.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .gallery-card:hover .gallery-img.active { transform: scale(1.1); }
 
         /* Card Content */
-        .card-content { padding: 20px; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
 
         .tag {
             font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
             text-transform: uppercase; padding: 5px 10px; border-radius: 4px;
-            display: inline-block; margin-bottom: 10px;
+            display: inline-block; margin-bottom: 10px; width: fit-content;
         }
 
         /* Tag Colors */
         .tag-event { background: rgba(118, 192, 67, 0.15); color: var(--primary-green); }
         .tag-collab { background: rgba(60, 145, 201, 0.15); color: var(--primary-blue); }
         .tag-activity { background: rgba(0, 240, 255, 0.15); color: var(--cyan-text); }
+        .tag-conf { background: rgba(157, 0, 255, 0.15); color: #b700ff; }
 
-        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: #fff; }
-        .card-date { font-size: 0.85rem; color: var(--text-gray); display: block; margin-bottom: 0; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; color: #fff; line-height: 1.3; }
+        .card-date { font-size: 0.85rem; color: var(--text-gray); display: block; margin-top: 10px; }
 
+        /* --- LIGHTBOX (FULL SIZE IMAGE) STYLES --- */
+        .lightbox {
+            display: none; /* Hidden by default */
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: rgba(0, 0, 0, 0.95); 
+            justify-content: center; 
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.show {
+            display: flex;
+            opacity: 1;
+        }
+        .lightbox-img {
+            max-width: 90%; 
+            max-height: 90%; 
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-btn:hover, .close-btn:focus {
+            color: var(--primary-blue);
+            text-decoration: none;
+            cursor: pointer;
+        }
+/* --- MOBILE RESPONSIVE STYLES (Paste at the bottom of style tag) --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text-white);
+    cursor: pointer;
+    margin-right: 15px;
+    order: 2; /* Position between logo and button */
+}
+
+/* 2. Media Query for Tablets & Mobile (Screens smaller than 900px) */
+@media (max-width: 900px) {
+    
+    /* General Layout Padding */
+    .content-wrapper, .page-section, .dark-section {
+        padding: 100px 5% 40px;
+    }
+
+    /* Navigation Drawer */
+    .hamburger { display: block; }
+    .btn-glow { order: 3; padding: 8px 15px; font-size: 0.85rem; }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        /* Hidden by default, slides down when active */
+        transform: translateY(-200%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+    }
+    
+    /* Active State for Menu */
+    .nav-links.mobile-active {
+        transform: translateY(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Stack Grids Vertically (1 Column) */
+    .grid-3-col, 
+    .projects-list, 
+    .gallery-grid, 
+    .contact-grid-layout, 
+    .team-grid,
+    .scope-container, 
+    .stage-flow-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hero Section Fixes */
+    .hero-container { flex-direction: column-reverse; text-align: center; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-visual { width: 100%; height: auto; margin-bottom: 30px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Component Fixes */
+    .project-row { flex-direction: column; text-align: center; gap: 15px; }
+    .proj-icon { margin-right: 0; margin-bottom: 10px; }
+    .project-header-line { flex-wrap: wrap; }
+    .status-badge { margin-left: 0; margin-top: 5px; }
+    
+    /* Chart/Diagram Fixes */
+    .venn-wrapper { flex-direction: column; height: auto; margin-top: 50px; }
+    .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+    .experts-wrapper { position: static; transform: none; margin-top: 15px; flex-direction: column; }
+    .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+    .level-2 { flex-direction: column; }
+    
+    /* Table Scroll */
+    .custom-table-wrapper { overflow-x: auto; }
+}
     </style>
 </head>
 <body>
@@ -138,47 +267,73 @@
             <i class="fa-solid fa-bolt gradient-text"></i>
             <span>GMLab</span>
         </div>
-        <ul class="nav-links">
+
+        <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+        <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="labinfo.html">Lab Info</a></li>
-            <li><a href="people.html">People</a></li>
-            <li><a href="research.html">Research</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="Lab_Information.html">Lab Info</a></li>
+            <li><a href="People.html">People</a></li>
+            <li><a href="Research.html">Research</a></li>
+            <li><a href="Gallery.html" class="active">Gallery</a></li>
+            <li><a href="Events.html">Events</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
     </nav>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-img" id="lightbox-img">
+    </div>
 
     <div class="content-wrapper">
         <h1>Gallery</h1>
         <p class="page-desc">A timeline of our research activities, collaborations, and events.</p>
 
         <div class="year-header">
-            <span class="year-title">2025</span>
+            <span class="year-title">Recent Highlights</span>
             <div class="year-line"></div>
         </div>
 
         <div class="gallery-grid">
+            
             <div class="gallery-card">
                 <div class="img-wrapper">
-                    <img src="images/gallery1.jpg" class="gallery-img" alt="NEA Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Net-Zero/1.jpg" class="gallery-img active" alt="ZHAW Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Net-Zero/2.jpg" class="gallery-img" alt="Lab Tour" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Net-Zero/3.jpg" class="gallery-img" alt="Discussion" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Net-Zero/4.jpg" class="gallery-img" alt="Presentation" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Net-Zero/5.jpg" class="gallery-img" alt="Group Photo" onerror="this.src='https://via.placeholder.com/400x300'">
                 </div>
                 <div class="card-content">
-                    <span class="tag tag-collab">Collaboration</span>
-                    <h3 class="card-title">Joint Research with NEA</h3>
-                    <span class="card-date">January 15, 2025</span>
+                    <span class="tag tag-collab">Intl. Collaboration</span> 
+                    <span class="tag tag-collab">Net-Zero Project</span>
+                    <h3 class="card-title">Visit by Prof. Dr. Petr Korba & Dr. Rafael Segundo (ZHAW)</h3>
+                    <span class="card-date">Discussion on Power Systems & Iberian Grid Blackout</span>
                 </div>
             </div>
 
             <div class="gallery-card">
                 <div class="img-wrapper">
-                    <img src="images/gallery2.jpg" class="gallery-img" alt="Lab Setup" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Gallery/3 Day Training on Distribution Grid Visualization using Smart Metering.jpg" class="gallery-img active" alt="Training" onerror="this.src='https://via.placeholder.com/400x300?text=Image+1'">
+                    </div>
+                <div class="card-content">
+                    <span class="tag tag-event">Training</span>
+                    <h3 class="card-title">3 Day Training on Distribution Grid Visualization</h3>
+                    <span class="card-date">Recent Event</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Final Project Dissemination.jpg" class="gallery-img active" alt="Dissemination" onerror="this.src='https://via.placeholder.com/400x300'">
                 </div>
                 <div class="card-content">
-                    <span class="tag tag-activity">Activity</span>
-                    <h3 class="card-title">New Microgrid Simulation Setup</h3>
-                    <span class="card-date">February 2, 2025</span>
+                    <span class="tag tag-event">Event</span>
+                    <h3 class="card-title">Final Project Dissemination</h3>
+                    <span class="card-date">Project Milestone</span>
                 </div>
             </div>
         </div>
@@ -189,46 +344,107 @@
         </div>
 
         <div class="gallery-grid">
+            
             <div class="gallery-card">
                 <div class="img-wrapper">
-                    <img src="images/gallery3.jpg" class="gallery-img" alt="Workshop" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Gallery/Smart Meter Installation.jpg" class="gallery-img active" alt="Smart Meter Installation" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Gallery/Meter Installation.jpg" class="gallery-img" alt="Smart Meter 2">
+                    
                 </div>
                 <div class="card-content">
-                    <span class="tag tag-event">Event</span>
-                    <h3 class="card-title">Renewable Energy Workshop</h3>
-                    <span class="card-date">November 20, 2024</span>
+                    <span class="tag tag-activity">Field Activity</span>
+                    <h3 class="card-title">Smart Meter Installation</h3>
+                    <span class="card-date">December 2024</span>
+                </div>
+            </div>
+
+   
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Visit to Smart Meter Data Center.jpg" class="gallery-img active" alt="Data Center Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-activity">Visit</span>
+                    <h3 class="card-title">Visit to Smart Meter Data Center</h3>
+                    <span class="card-date">October 2024</span>
                 </div>
             </div>
 
             <div class="gallery-card">
                 <div class="img-wrapper">
-                    <img src="images/gallery4.jpg" class="gallery-img" alt="Guest Lecture" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Gallery/Meeting with Project Partners.jpg" class="gallery-img active" alt="Partner Meeting" onerror="this.src='https://via.placeholder.com/400x300'">
                 </div>
                 <div class="card-content">
-                    <span class="tag tag-event">Event</span>
-                    <h3 class="card-title">Guest Lecture by Prof. Korba</h3>
-                    <span class="card-date">October 5, 2024</span>
+                    <span class="tag tag-collab">Meeting</span>
+                    <h3 class="card-title">Meeting with Project Partners</h3>
+                    <span class="card-date">September 2024</span>
                 </div>
             </div>
 
             <div class="gallery-card">
                 <div class="img-wrapper">
-                    <img src="images/gallery5.jpg" class="gallery-img" alt="Field Visit" onerror="this.src='https://via.placeholder.com/400x300'">
+                    <img src="Gallery/Internal Team Meeting.jpg" class="gallery-img active" alt="Team Meeting" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-collab">Meeting</span>
+                    <h3 class="card-title">Internal Team Meeting</h3>
+                    <span class="card-date">August 2024</span>
+                </div>
+            </div>
+
+             <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Meeting within Kathmandu University.jpg" class="gallery-img active" alt="KU Meeting" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-collab">Meeting</span>
+                    <h3 class="card-title">Meeting within Kathmandu University</h3>
+                    <span class="card-date">July 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Participation in ECTI-CON Conference, 2024.jpg" class="gallery-img active" alt="ECTI-CON" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-conf">Conference</span>
+                    <h3 class="card-title">Participation in ECTI-CON Conference</h3>
+                    <span class="card-date">May 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Participation in ISIE 2024 Conference.jpg" class="gallery-img active" alt="ISIE Conference" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-conf">Conference</span>
+                    <h3 class="card-title">Participation in ISIE 2024 Conference</h3>
+                    <span class="card-date">June 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Data Science Session from External Expert Dr.Rajini.jpg" class="gallery-img active" alt="Data Science Session" onerror="this.src='https://via.placeholder.com/400x300'">
+                </div>
+                <div class="card-content">
+                    <span class="tag tag-event">Guest Lecture</span>
+                    <h3 class="card-title">Data Science Session with External Expert Dr. Rajini</h3>
+                    <span class="card-date">April 2024</span>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="img-wrapper">
+                    <img src="Gallery/Participation of RA.jpg" class="gallery-img active" alt="RA Participation" onerror="this.src='https://via.placeholder.com/400x300'">
                 </div>
                 <div class="card-content">
                     <span class="tag tag-activity">Activity</span>
-                    <h3 class="card-title">Field Visit to Mailung Khola</h3>
-                    <span class="card-date">August 12, 2024</span>
-                </div>
-            </div>
-             <div class="gallery-card">
-                <div class="img-wrapper">
-                    <img src="images/gallery6.jpg" class="gallery-img" alt="Signing" onerror="this.src='https://via.placeholder.com/400x300'">
-                </div>
-                <div class="card-content">
-                    <span class="tag tag-collab">Collaboration</span>
-                    <h3 class="card-title">MOU Signing with Industry Partners</h3>
-                    <span class="card-date">May 10, 2024</span>
+                    <h3 class="card-title">Participation of Research Assistants</h3>
+                    <span class="card-date">March 2024</span>
                 </div>
             </div>
         </div>
@@ -236,5 +452,93 @@
     </div>
 
     <div id="contact" style="height: 1px;"></div> 
+    
+
+
+    <script>
+        // 1. LIGHTBOX FUNCTIONALITY
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // Close lightbox when clicking the X
+        function closeLightbox() {
+            lightbox.classList.remove('show');
+            setTimeout(() => { lightbox.style.display = 'none'; }, 300);
+        }
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // 2. SLIDESHOW AND CLICK EVENT
+        document.querySelectorAll('.img-wrapper').forEach(wrapper => {
+            const images = wrapper.querySelectorAll('.gallery-img');
+            
+            // Add click event to all images to open lightbox
+            images.forEach(img => {
+                img.addEventListener('click', () => {
+                    lightbox.style.display = 'flex';
+                    // Small timeout to allow display:flex to apply before adding opacity class for transition
+                    setTimeout(() => { lightbox.classList.add('show'); }, 10);
+                    lightboxImg.src = img.src;
+                });
+            });
+
+            // Start slideshow if more than 1 image
+            if (images.length > 1) {
+                let currentIndex = 0;
+                // Ensure first image is active
+                images.forEach((img, index) => {
+                    if (index === 0) img.classList.add('active');
+                    else img.classList.remove('active');
+                });
+
+                setInterval(() => {
+                    images[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].classList.add('active');
+                }, 3000); // 3 seconds interval
+            }
+        });
+    </script>
+
+<script>
+    // --- MOBILE MENU TOGGLE SCRIPT ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the active class
+            navLinks.classList.toggle('mobile-active');
+            
+            // Switch icon between 'Bars' and 'X'
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close menu automatically when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('mobile-active');
+            const icon = hamburger.querySelector('i');
+            if(icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

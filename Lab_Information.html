@@ -7,22 +7,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL VARIABLES --- */
+        /* --- GLOBAL VARIABLES (Matched to Home Page) --- */
         :root {
             --bg-dark: #080812;
             --text-white: #ffffff;
             --text-gray: #a0a0b0;
             --primary-blue: #3c91c9;
             --primary-green: #76c043;
+            --primary-gradient: linear-gradient(135deg, #3c91c9 0%, #76c043 100%);
             --cyan-text: #00F0FF;
             --card-bg: #11111a;
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glow-shadow: 0 0 20px rgba(60, 145, 201, 0.3);
             --font-main: 'Outfit', sans-serif;
             
             /* Diagram Colors */
             --dia-orange: #F4B084;
             --dia-grey: #D9D9D9;
-            --dia-light-blue: #DEEBF7; /* Matched to image */
+            --dia-light-blue: #DEEBF7; 
             --dia-text-blue: #4472C4;
         }
 
@@ -30,11 +32,26 @@
         body { background-color: var(--bg-dark); color: var(--text-white); overflow-x: hidden; line-height: 1.6; }
         a { text-decoration: none; color: inherit; }
 
-        /* --- NAV BAR --- */
+        /* --- BACKGROUND ORBS (Matched to Home Page) --- */
+        .orb {
+            position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4;
+            animation: floatOrb 10s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary-blue); top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: var(--primary-green); bottom: 10%; right: -50px; animation-delay: 2s; }
+        .orb-3 { width: 200px; height: 200px; background: #5a2e91; top: 40%; left: 30%; opacity: 0.2; animation-delay: 4s; }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(30px) scale(1.1); }
+        }
+
+       /* Navigation Bar */
         .glass-nav {
             position: fixed; top: 0; width: 100%; padding: 1.2rem 5%;
             display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg-dark); border-bottom: var(--glass-border); z-index: 1000;
+            background: var(--bg-dark); 
+            border-bottom: var(--glass-border); z-index: 1000;
         }
         .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
         .gradient-text {
@@ -42,14 +59,17 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links li { cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; }
-        .nav-links li:hover, .nav-links li a.active { color: var(--text-white); }
+        .nav-links li {
+            cursor: pointer; color: var(--text-gray); font-weight: 500; transition: 0.3s; position: relative;
+        }
+        .nav-links li:hover, .nav-links li.active { color: var(--text-white); }
         .btn-glow {
             padding: 10px 25px; border-radius: 50px;
             background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
-            border: none; color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
+            border: none; color: white; font-weight: 600; cursor: pointer;
+            box-shadow: var(--glow-shadow); transition: 0.3s;
         }
-        .btn-glow:hover { transform: scale(1.05); }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(118, 192, 67, 0.5); }
 
         /* --- CONTENT WRAPPER --- */
         .content-wrapper { padding: 140px 5% 60px; max-width: 1300px; margin: 0 auto; }
@@ -272,7 +292,7 @@
         .contact-col p { color: var(--text-gray); margin-bottom: 10px; }
 
         @media (max-width: 900px) { 
-            .nav-links { display: none; } 
+            /* REMOVED: .nav-links { display: none; } which was breaking the menu */
             .scope-container { grid-template-columns: 1fr; }
             .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
             .venn-wrapper { flex-direction: column; height: auto; }
@@ -280,32 +300,120 @@
             .stage-box { width: 100%; margin-bottom: 5px; }
             .stage-arrow { transform: rotate(90deg); margin: 5px 0; }
         }
+        /* --- MOBILE RESPONSIVE STYLES  --- */
+
+/* 1. Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text-white);
+    cursor: pointer;
+    margin-right: 15px;
+    order: 2; /* Position between logo and button */
+}
+
+/* 2. Media Query for Tablets & Mobile (Screens smaller than 900px) */
+@media (max-width: 900px) {
+    
+    /* General Layout Padding */
+    .content-wrapper, .page-section, .dark-section {
+        padding: 100px 5% 40px;
+    }
+
+    /* Navigation Drawer */
+    .hamburger { display: block; }
+    .btn-glow { order: 3; padding: 8px 15px; font-size: 0.85rem; }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        /* Hidden by default, slides down when active */
+        transform: translateY(-200%);
+        transition: transform 0.4s ease;
+        z-index: 999;
+        display: flex; /* Ensure it is flex so it can be seen */
+    }
+    
+    /* Active State for Menu */
+    .nav-links.mobile-active {
+        transform: translateY(0);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Stack Grids Vertically (1 Column) */
+    .grid-3-col, 
+    .projects-list, 
+    .gallery-grid, 
+    .contact-grid-layout, 
+    .team-grid,
+    .scope-container,
+    .stage-flow-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Hero Section Fixes */
+    .hero-container { flex-direction: column-reverse; text-align: center; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-visual { width: 100%; height: auto; margin-bottom: 30px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Component Fixes */
+    .project-row { flex-direction: column; text-align: center; gap: 15px; }
+    .proj-icon { margin-right: 0; margin-bottom: 10px; }
+    .project-header-line { flex-wrap: wrap; }
+    .status-badge { margin-left: 0; margin-top: 5px; }
+    
+    /* Chart/Diagram Fixes */
+    .venn-wrapper { flex-direction: column; height: auto; margin-top: 50px; }
+    .venn-circle { position: relative; transform: none !important; margin: -20px 0; }
+    .experts-wrapper { position: static; transform: none; margin-top: 15px; flex-direction: column; }
+    .dashed-arrow-container { transform: rotate(90deg); margin: 10px 0; }
+    .level-2 { flex-direction: column; }
+    
+    /* Table Scroll */
+    .custom-table-wrapper { overflow-x: auto; }
+}
     </style>
 </head>
 <body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
     <nav class="glass-nav">
         <div class="logo">
             <i class="fa-solid fa-bolt gradient-text"></i>
             <span>GMLab</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="labinfo.html" class="active">Lab Info</a></li>
-            <li><a href="people.html">People</a></li>
-            <li><a href="research.html">Research</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+        <div class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-links"> <li><a href="index.html">Home</a></li>
+            <li><a href="Lab_Information.html" class="active">Lab Info</a></li>
+            <li><a href="People.html">People</a></li>
+            <li><a href="Research.html">Research</a></li>
+            <li><a href="Gallery.html">Gallery</a></li>
+            <li><a href="Events.html">Events</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
-        <button class="btn-glow" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Join Us</button>
+       <button class="btn-glow" onclick="window.location.href='index.html#contact'">
+            Join Us
+        </button>
     </nav>
 
     <div class="content-wrapper">
         
-        <h1>Lab Information</h1>
-        <p class="subtitle"> GMLab 2025</p>
-
+        
         <section class="info-section">
             <h2 class="section-title">1. Background</h2>
             <p>The Nepalese power grid is moving towards the scenario of having sufficient surplus generation compared to the electrical local load demand. This has removed loadshedding from the country and allowed the grid to look forward to new and exciting technologies adoption such as smart-grid, digital substation, optical fiber communication for power systems, phasor measurement units installations etc. All of these new technologies will help to make the Nepalese grid stronger, reliable and effective.</p>
@@ -601,7 +709,6 @@
 
     </div>
 
-
     <script>
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -616,5 +723,39 @@
         });
     </script>
 
+    <script>
+    // --- MOBILE MENU TOGGLE SCRIPT ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            // Toggle the active class
+            navLinks.classList.toggle('mobile-active');
+            
+            // Switch icon between 'Bars' and 'X'
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Close menu automatically when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('mobile-active');
+            const icon = hamburger.querySelector('i');
+            if(icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    });
+</script>
 </body>
 </html>
